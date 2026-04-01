@@ -68,9 +68,10 @@ export default function Navbar({ sections }) {
         if (e) e.preventDefault();
         if (!resumeUrl) return;
 
-        // securely triggers a native download of the local file
+        // Use the download API route to proxy the file download from Cloudinary
+        // This avoids cross-origin security errors in the browser and enforces a correct filename
         const link = document.createElement("a");
-        link.href = resumeUrl;
+        link.href = "/api/resume/download";
         link.download = "Resume.pdf";
         document.body.appendChild(link);
         link.click();
