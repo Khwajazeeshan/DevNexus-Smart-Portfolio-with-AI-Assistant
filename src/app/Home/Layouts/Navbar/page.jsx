@@ -64,6 +64,21 @@ export default function Navbar({ sections }) {
 
     const profileName = profileData?.name || "Dev";
 
+    const handleDownloadResume = (e) => {
+        if (e) e.preventDefault();
+        if (!resumeUrl) return;
+
+        // securely triggers a native download of the local file
+        const link = document.createElement("a");
+        link.href = resumeUrl;
+        link.download = "Resume.pdf";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+
+        setMenuOpen(false);
+    };
+
     return (
         <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 py-5 bg-bg-dark/90 backdrop-blur-xl shadow-lg border-b border-white/5`}>
             <div className="container mx-auto px-6 flex justify-between items-center">
@@ -100,15 +115,12 @@ export default function Navbar({ sections }) {
                     </ul>
 
                     {resumeUrl && (
-                        <a
-                            href={resumeUrl}
-                            download
-                            target="_blank"
-                            rel="noopener noreferrer"
+                        <button
+                            onClick={handleDownloadResume}
                             className="px-5 py-2.5 rounded-full bg-brand-primary/10 border border-brand-primary/30 text-brand-primary font-semibold text-sm hover:bg-brand-primary hover:text-white transition-all duration-300 shadow-sm hover:shadow-brand-primary/20 flex items-center gap-2 whitespace-nowrap"
                         >
                             Resume <IoMdDownload className="text-lg" />
-                        </a>
+                        </button>
                     )}
                 </div>
 
@@ -139,16 +151,12 @@ export default function Navbar({ sections }) {
                     </div>
 
                     {resumeUrl && (
-                        <a
-                            href={resumeUrl}
-                            download
-                            target="_blank"
-                            rel="noopener noreferrer"
+                        <button
+                            onClick={handleDownloadResume}
                             className="px-6 py-3 rounded-full bg-brand-primary text-white font-bold text-base hover:scale-105 transition-transform flex items-center gap-2 shadow-lg shadow-brand-primary/20"
-                            onClick={() => setMenuOpen(false)}
                         >
                             Resume <IoMdDownload className="text-lg" />
-                        </a>
+                        </button>
                     )}
                 </div>
             </div>

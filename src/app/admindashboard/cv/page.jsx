@@ -68,6 +68,19 @@ export default function AdminCVPage() {
         }
     };
 
+    const handleDownload = (e) => {
+        if (e) e.preventDefault();
+        if (!resumeUrl) return;
+
+        // Securely prompt download for local files without redirecting
+        const link = document.createElement("a");
+        link.href = resumeUrl;
+        link.download = "Resume.pdf";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    };
+
     return (
         <div className="min-h-screen bg-[#020617] text-slate-200 px-4 py-8 md:p-8">
             <Toaster position="top-right" />
@@ -142,15 +155,13 @@ export default function AdminCVPage() {
                                     </div>
                                 </div>
                                 <div className="flex items-center gap-2">
-                                    <a 
-                                        href={resumeUrl} 
-                                        target="_blank" 
-                                        rel="noopener noreferrer" 
+                                    <button 
+                                        onClick={handleDownload}
                                         className="p-4 bg-brand-primary/10 text-brand-primary hover:bg-brand-primary hover:text-white rounded-2xl transition-all shadow-lg active:scale-95"
-                                        title="View Current Resume"
+                                        title="Download Current Resume"
                                     >
                                         <FaExternalLinkAlt size={16} />
-                                    </a>
+                                    </button>
                                 </div>
                             </div>
                         ) : (

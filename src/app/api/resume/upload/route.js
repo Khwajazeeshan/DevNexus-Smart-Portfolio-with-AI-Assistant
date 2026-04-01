@@ -1,25 +1,12 @@
 import Resume from "@/models/Resume.model.js";
 import connectDB from "@/config/connectDB";
 import { NextResponse } from "next/server";
-import { v2 as cloudinary } from 'cloudinary';
-
-// Configure Cloudinary
-cloudinary.config({
-    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-    api_key: process.env.CLOUDINARY_API_KEY,
-    api_secret: process.env.CLOUDINARY_API_SECRET,
-});
+import { writeFile, mkdir } from "fs/promises";
+import path from "path";
+import fs from "fs";
 
 export async function POST(request) {
     try {
-        // Check if environment variables are set
-        if (!process.env.CLOUDINARY_CLOUD_NAME || !process.env.CLOUDINARY_API_KEY || !process.env.CLOUDINARY_API_SECRET) {
-            return NextResponse.json({ 
-                success: false, 
-                message: "Cloudinary configuration is missing on the server (Vercel Environment Variables)" 
-            }, { status: 500 });
-        }
-
         await connectDB();
         const formData = await request.formData();
         const file = formData.get("file");
@@ -32,40 +19,41 @@ export async function POST(request) {
         const bytes = await file.arrayBuffer();
         const buffer = Buffer.from(bytes);
 
-        // Upload to Cloudinary using upload_stream
-        const uploadResult = await new Promise((resolve, reject) => {
-            const uploadStream = cloudinary.uploader.upload_stream(
-                {
-                    resource_type: "auto",
-                    folder: "resumes",
-                },
-                (error, result) => {
-                    if (error) reject(error);
-                    else resolve(result);
-                }
-            );
-            uploadStream.end(buffer);
-        });
+        // Define the local path (public/resumes directory so it can be served statically)
+        const publicDir = path.join(process.cwd(), "public");
+        const resumeDir = path.join(publicDir, "resumes");
+
+        // Ensure the resumes directory exists
+        if (!fs.existsSync(resumeDir)) {
+            await mkdir(resumeDir, { recursive: true });
+        }
+
+        // We will just overwrite \"resume.pdf\" to keep things clean
+        const filename = "resume.pdf";
+        const filePath = path.join(resumeDir, filename);
+
+        // Write the file to the local disk
+        await writeFile(filePath, buffer);
+
+        // The URL is simply the path relative to the public folder
+        const resumeUrl = `/resumes/${filename}?v=${new Date().getTime()}`; // Add timestamp to break cache
 
         let resume = await Resume.findOne();
         if (!resume) {
             resume = new Resume({ education: [], experience: [], skills: [] });
         }
 
-        // Note: With Cloudinary, we don't necessarily need to delete the old file 
-        // using fs, but if we wanted to delete from Cloudinary, we'd use its public_id.
-        // For now, we just update the URL.
-
-        resume.resumeUrl = uploadResult.secure_url;
+        // Save local path to database
+        resume.resumeUrl = resumeUrl;
         await resume.save();
 
         return NextResponse.json({
             success: true,
-            message: "Resume uploaded successfully to Cloudinary",
+            message: "Resume uploaded successfully to local host",
             resumeUrl: resume.resumeUrl
         });
     } catch (error) {
-        console.error("Error in resume upload:", error);
+        console.error("Error in local resume upload:", error);
         return NextResponse.json({
             success: false,
             message: "Server error during upload",
