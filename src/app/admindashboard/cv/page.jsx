@@ -72,9 +72,10 @@ export default function AdminCVPage() {
         if (e) e.preventDefault();
         if (!resumeUrl) return;
 
-        // Securely prompt download for local files without redirecting
+        // We use the download API route to proxy the file download from Cloudinary
+        // This avoids cross-origin security errors in the browser
         const link = document.createElement("a");
-        link.href = resumeUrl;
+        link.href = "/api/resume/download";
         link.download = "Resume.pdf";
         document.body.appendChild(link);
         link.click();
