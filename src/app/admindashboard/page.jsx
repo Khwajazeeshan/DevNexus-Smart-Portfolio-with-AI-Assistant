@@ -13,7 +13,7 @@ export default function Admin() {
             <div className="absolute top-[-10%] right-[-5%] w-[500px] h-[500px] bg-brand-primary/10 rounded-full blur-[120px] pointer-events-none"></div>
             <div className="absolute bottom-[-10%] left-[-5%] w-[500px] h-[500px] bg-brand-secondary/5 rounded-full blur-[120px] pointer-events-none"></div>
 
-            <div className="max-w-7xl mx-auto px-6 py-12 relative z-10">
+            <div className="max-w-7xl mx-auto px-4 md:px-12 py-10 md:py-20 relative z-10">
                 <header className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8 mb-16">
                     <div className="animate-fade-in-up">
                         <div className="flex items-center gap-3 mb-3">
@@ -139,7 +139,7 @@ export default function Admin() {
 
 const DashboardCard = ({ href, icon, title, desc, color, glow }) => (
     <Link href={href} className="group block h-full">
-        <div className="h-full glass-hover p-10 rounded-[2.5rem] border border-white/10 transition-all duration-500 flex flex-col relative overflow-hidden active:scale-[0.98]">
+        <div className="h-full glass-hover p-8 md:p-10 rounded-[2.5rem] border border-white/10 transition-all duration-500 flex flex-col relative overflow-hidden active:scale-[0.98]">
             {/* Subtle inner gradient shadow */}
             <div className={`absolute inset-0 bg-gradient-to-br ${color} opacity-0 group-hover:opacity-5 transition-opacity duration-500`}></div>
             

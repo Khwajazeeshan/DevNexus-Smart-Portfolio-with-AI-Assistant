@@ -67,21 +67,22 @@ const FooterCard = () => {
     };
 
     return (
-        <div className="min-h-screen bg-[#020617] text-slate-200 p-8">
+        <div className="min-h-screen bg-[#020617] text-slate-200 px-4 py-8 md:p-8">
             <Toaster position="top-right" />
             
             <div className="max-w-4xl mx-auto">
-                <header className="flex justify-between items-center mb-10">
+                <header className="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-6">
                     <div>
-                        <Link href="/admindashboard" className="flex items-center gap-2 text-slate-400 hover:text-white transition-colors mb-4 group">
+                        <Link href="/admindashboard" className="flex items-center gap-2 text-slate-400 hover:text-white transition-colors mb-4 group w-fit">
                             <FaArrowLeft className="group-hover:-translate-x-1 transition-transform" />
                             <span>Back to Dashboard</span>
                         </Link>
-                        <h1 className="text-3xl font-bold text-white">Social Links</h1>
+                        <h1 className="text-3xl md:text-4xl font-bold text-white tracking-tight">Social Connect</h1>
+                        <p className="text-slate-400 text-sm mt-1 font-medium italic opacity-80">Link your professional profiles and social presence.</p>
                     </div>
                 </header>
 
-                <form onSubmit={handleFooterSubmit} className="space-y-8 bg-slate-900/50 border border-white/5 p-10 rounded-[2.5rem] shadow-2xl">
+                <form onSubmit={handleFooterSubmit} className="space-y-8 bg-slate-900/50 border border-white/5 p-6 md:p-10 rounded-[2.5rem] shadow-2xl backdrop-blur-xl">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                         {/* Facebook */}
                         <div className="space-y-4">
@@ -140,13 +141,13 @@ const FooterCard = () => {
                         </div>
                     </div>
 
-                    <div className="pt-6 flex justify-end">
+                    <div className="pt-6 flex justify-center md:justify-end">
                         <button
                             type="submit"
                             disabled={isSaving}
-                            className="px-12 py-4 bg-brand-primary hover:bg-violet-600 text-white font-bold rounded-2xl transition-all shadow-lg shadow-brand-primary/20 flex items-center gap-3 active:scale-95 disabled:opacity-50"
+                            className="w-full md:w-auto px-12 py-5 bg-brand-primary hover:bg-violet-600 text-white font-black rounded-2xl transition-all shadow-xl shadow-brand-primary/20 flex items-center justify-center gap-3 active:scale-[0.98] disabled:opacity-50"
                         >
-                            <FaSave /> {isSaving ? "Saving..." : "Update Socials"}
+                            <FaSave className={isSaving ? "animate-pulse" : ""} /> {isSaving ? "Synchronizing..." : "Update Social Ecosystem"}
                         </button>
                     </div>
                 </form>

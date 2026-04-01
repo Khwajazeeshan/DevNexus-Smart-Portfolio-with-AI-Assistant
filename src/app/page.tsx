@@ -7,6 +7,7 @@ import LoadingScreen from "./Home/Layouts/LoadingScreen/page";
 
 export default function Home() {
   const [loading, setLoading] = useState(true);
+  const [contentReady, setContentReady] = useState(false);
   const sections = {
     about: useRef<HTMLDivElement>(null),
     resume: useRef<HTMLDivElement>(null),
@@ -17,10 +18,12 @@ export default function Home() {
 
   return (
     <>
-      {loading && <LoadingScreen onComplete={() => setLoading(false)} />}
+      {/* @ts-ignore */}
+      {loading && <LoadingScreen isReady={contentReady} onComplete={() => setLoading(false)} />}
       <div className={`transition-opacity duration-1000 ${loading ? 'opacity-0 h-0 overflow-hidden' : 'opacity-100'}`}>
         <Navbar sections={sections} />
-        <HomeComponent sections={sections} />
+        {/* @ts-ignore */}
+        <HomeComponent sections={sections} onReady={() => setContentReady(true)} />
         <Footer />
       </div>
     </>

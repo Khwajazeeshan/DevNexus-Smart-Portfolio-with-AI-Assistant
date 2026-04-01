@@ -7,7 +7,7 @@ import Contact from "./Layouts/Contact/Contact";
 import Chatbot from "../chatbot/page";
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
-export default function Home({ sections }) {
+export default function Home({ sections, onReady }) {
   const [visibleSections, setVisibleSections] = useState(["About"]);
   const [isChatOpen, setIsChatOpen] = useState(false);
   const toggleChat = () => setIsChatOpen(!isChatOpen);
@@ -20,7 +20,7 @@ export default function Home({ sections }) {
     <main className="flex flex-col items-center bg-bg-dark min-h-screen">
       <div className="w-full max-w-7xl mx-auto flex flex-col gap-0 md:gap-8">
         {visibleSections.includes("About") && (
-          <About ref={sections.about} onComplete={() => showNextSection("Resume")} />
+          <About ref={sections.about} onComplete={() => showNextSection("Resume")} onReady={onReady} />
         )}
         {visibleSections.includes("Resume") && (
           <Resume ref={sections.resume} onComplete={() => showNextSection("Projects")} />

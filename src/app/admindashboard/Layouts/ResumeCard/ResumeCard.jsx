@@ -182,61 +182,64 @@ const ResumeCard = () => {
     };
 
     return (
-        <div className="min-h-screen bg-[#020617] text-slate-200 p-8">
+        <div className="min-h-screen bg-[#020617] text-slate-200 px-4 py-8 md:p-8">
             <Toaster position="top-right" />
             
             <div className="max-w-5xl mx-auto">
-                <header className="flex justify-between items-center mb-10">
+                <header className="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-6">
                     <div>
-                        <Link href="/admindashboard" className="flex items-center gap-2 text-slate-400 hover:text-white transition-colors mb-4 group">
+                        <Link href="/admindashboard" className="flex items-center gap-2 text-slate-400 hover:text-white transition-colors mb-4 group w-fit">
                             <FaArrowLeft className="group-hover:-translate-x-1 transition-transform" />
                             <span>Back to Dashboard</span>
                         </Link>
-                        <h1 className="text-3xl font-bold text-white">Resume Manager</h1>
+                        <h1 className="text-3xl md:text-4xl font-bold text-white tracking-tight">Resume Manager</h1>
+                        <p className="text-slate-400 text-sm mt-1 font-medium italic opacity-80">Design your career path and technical expertise.</p>
                     </div>
                 </header>
 
                 <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
                     {/* Sidebar Tabs */}
-                    <div className="lg:col-span-1 space-y-2">
-                        <TabButton 
-                            active={activeSection === "education"} 
-                            onClick={() => setActiveSection("education")}
-                            icon={<FaGraduationCap />}
-                            label="Education"
-                        />
-                        <TabButton 
-                            active={activeSection === "experience"} 
-                            onClick={() => setActiveSection("experience")}
-                            icon={<FaBriefcase />}
-                            label="Experience"
-                        />
-                        <TabButton 
-                            active={activeSection === "skills"} 
-                            onClick={() => setActiveSection("skills")}
-                            icon={<FaCode />}
-                            label="Skills"
-                        />
+                    <div className="lg:col-span-1 flex lg:flex-col gap-2 overflow-x-auto pb-4 lg:pb-0 scrollbar-hide no-scrollbar">
+                        <div className="flex lg:flex-col gap-2 min-w-max lg:min-w-0 w-full">
+                            <TabButton 
+                                active={activeSection === "education"} 
+                                onClick={() => setActiveSection("education")}
+                                icon={<FaGraduationCap />}
+                                label="Education"
+                            />
+                            <TabButton 
+                                active={activeSection === "experience"} 
+                                onClick={() => setActiveSection("experience")}
+                                icon={<FaBriefcase />}
+                                label="Experience"
+                            />
+                            <TabButton 
+                                active={activeSection === "skills"} 
+                                onClick={() => setActiveSection("skills")}
+                                icon={<FaCode />}
+                                label="Skills"
+                            />
+                        </div>
                     </div>
 
                     {/* Content Area */}
-                    <div className="lg:col-span-3 space-y-8 bg-slate-900/50 border border-white/5 p-8 rounded-[2.5rem] shadow-2xl">
+                    <div className="lg:col-span-3 space-y-8 bg-slate-900/50 border border-white/5 p-6 md:p-10 rounded-[2.5rem] shadow-2xl backdrop-blur-xl">
                         {activeSection === "education" && (
                             <section className="animate-fade-in space-y-6">
                                 <h2 className="text-xl font-bold text-white flex items-center gap-3">
                                     <FaGraduationCap className="text-brand-primary" /> Manage Education
                                 </h2>
-                                <div className="flex gap-4">
+                                <div className="flex flex-col sm:flex-row gap-4">
                                     <input 
                                         type="text" 
-                                        placeholder="Enter Education (e.g. BS in CS - XYZ University, 2021)"
-                                        className="flex-1 bg-slate-800 border border-white/5 rounded-2xl py-4 px-6 text-white focus:outline-none focus:border-brand-primary/50 transition-all font-medium"
+                                        placeholder="Enter Education (e.g. BS in CS - University, 2021)"
+                                        className="w-full sm:flex-1 bg-slate-800 border border-white/5 rounded-2xl py-4 px-6 text-white focus:outline-none focus:border-brand-primary/50 transition-all font-medium"
                                         value={educationInput}
                                         onChange={(e) => setEducationInput(e.target.value)}
                                         onKeyDown={(e) => e.key === "Enter" && handleEducationSubmit()}
                                     />
-                                    <button onClick={handleEducationSubmit} className="px-6 rounded-2xl bg-brand-primary text-white hover:bg-violet-600 transition-all flex items-center gap-2 font-bold shadow-lg shadow-brand-primary/20">
-                                        <FaPlus /> Add
+                                    <button onClick={handleEducationSubmit} className="w-full sm:w-auto px-8 py-4 sm:py-0 rounded-2xl bg-brand-primary text-white hover:bg-violet-600 transition-all flex items-center justify-center gap-2 font-black shadow-xl shadow-brand-primary/20 active:scale-[0.98]">
+                                        <FaPlus /> Add Item
                                     </button>
                                 </div>
                                 <div className="space-y-4 pt-4 border-t border-white/5">
@@ -265,17 +268,17 @@ const ResumeCard = () => {
                                 <h2 className="text-xl font-bold text-white flex items-center gap-3">
                                     <FaBriefcase className="text-brand-primary" /> Manage Experience
                                 </h2>
-                                <div className="flex gap-4">
+                                <div className="flex flex-col sm:flex-row gap-4">
                                     <input 
                                         type="text" 
-                                        placeholder="Enter Experience (e.g. Frontend Developer - ABC Corp, 2022-Present)"
-                                        className="flex-1 bg-slate-800 border border-white/5 rounded-2xl py-4 px-6 text-white focus:outline-none focus:border-brand-primary/50 transition-all font-medium"
+                                        placeholder="Enter Experience (e.g. Developer - Corp, 2022-Present)"
+                                        className="w-full sm:flex-1 bg-slate-800 border border-white/5 rounded-2xl py-4 px-6 text-white focus:outline-none focus:border-brand-primary/50 transition-all font-medium"
                                         value={experienceInput}
                                         onChange={(e) => setExperienceInput(e.target.value)}
                                         onKeyDown={(e) => e.key === "Enter" && handleExperienceSubmit()}
                                     />
-                                    <button onClick={handleExperienceSubmit} className="px-6 rounded-2xl bg-brand-primary text-white hover:bg-violet-600 transition-all flex items-center gap-2 font-bold shadow-lg shadow-brand-primary/20">
-                                        <FaPlus /> Add
+                                    <button onClick={handleExperienceSubmit} className="w-full sm:w-auto px-8 py-4 sm:py-0 rounded-2xl bg-brand-primary text-white hover:bg-violet-600 transition-all flex items-center justify-center gap-2 font-black shadow-xl shadow-brand-primary/20 active:scale-[0.98]">
+                                        <FaPlus /> Add Item
                                     </button>
                                 </div>
                                 <div className="space-y-4 pt-4 border-t border-white/5">

@@ -36,7 +36,7 @@ const ProjectCard = () => {
 
     const handleProjectSubmit = async (e) => {
         e.preventDefault();
-        
+
         // Basic word count validation for description (approx 15-18 words)
         const wordCount = projectDescription.trim().split(/\s+/).length;
         if (wordCount > 20) {
@@ -52,8 +52,8 @@ const ProjectCard = () => {
             const response = await fetch(`/api/project/add-project`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ 
-                    name: projectName, 
+                body: JSON.stringify({
+                    name: projectName,
                     link: ensureHttps(projectLink),
                     description: projectDescription,
                     technologies: projectTech
@@ -71,8 +71,8 @@ const ProjectCard = () => {
             } else {
                 toast.error(data.message);
             }
-        } catch { 
-            toast.error("Error adding project"); 
+        } catch {
+            toast.error("Error adding project");
         } finally {
             setLoading(false);
         }
@@ -110,7 +110,7 @@ const ProjectCard = () => {
             const response = await fetch(`/api/project/reorder-projects`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ 
+                body: JSON.stringify({
                     projectsIds: projectsList.map(p => p._id)
                 }),
             });
@@ -123,18 +123,18 @@ const ProjectCard = () => {
     };
 
     return (
-        <div className="min-h-screen bg-[#020617] text-slate-200 p-4 md:p-8">
+    <div className="min-h-screen bg-[#020617] text-slate-200 px-4 py-8 md:p-8">
             <Toaster position="top-right" />
-            
+
             <div className="max-w-4xl mx-auto">
-                <header className="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-4">
+                <header className="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-6">
                     <div>
-                        <Link href="/admindashboard" className="flex items-center gap-2 text-slate-400 hover:text-white transition-colors mb-4 group">
+                        <Link href="/admindashboard" className="flex items-center gap-2 text-slate-400 hover:text-white transition-colors mb-4 group w-fit">
                             <FaArrowLeft className="group-hover:-translate-x-1 transition-transform" />
                             <span>Back to Dashboard</span>
                         </Link>
-                        <h1 className="text-3xl font-bold text-white tracking-tight">Project Management</h1>
-                        <p className="text-slate-400 text-sm mt-1">Curate and showcase your best professional work.</p>
+                        <h1 className="text-3xl md:text-4xl font-bold text-white tracking-tight">Project Management</h1>
+                        <p className="text-slate-400 text-sm mt-1 font-medium italic opacity-80">Curate and showcase your best professional work.</p>
                     </div>
                 </header>
 
@@ -187,12 +187,13 @@ const ProjectCard = () => {
                                 value={projectDescription}
                                 onChange={(e) => setProjectDescription(e.target.value)}
                             />
-                            <div className="flex justify-between items-center px-2">
-                                <p className="text-[10px] text-slate-600 italic">Total Words: {projectDescription.trim() ? projectDescription.trim().split(/\s+/).length : 0} / 20 max</p>
+                            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center px-2 gap-2">
+                                <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Word Count: {projectDescription.trim() ? projectDescription.trim().split(/\s+/).length : 0} / 20</p>
+                                <p className="text-[10px] text-brand-primary font-bold uppercase tracking-widest opacity-60">Around 15-18 words optimal</p>
                             </div>
                         </div>
 
-                        <button 
+                        <button
                             onClick={handleProjectSubmit}
                             disabled={loading || !projectName.trim() || !projectLink.trim() || !projectDescription.trim() || !projectTech.trim() || (projectDescription.trim().split(/\s+/).length > 20)}
                             className="w-full py-5 bg-gradient-to-r from-brand-primary to-violet-600 text-white font-black rounded-2xl transition-all shadow-xl shadow-brand-primary/20 flex items-center justify-center gap-3 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed group"
@@ -212,17 +213,17 @@ const ProjectCard = () => {
 
                     <div className="pt-12 border-t border-white/5 mt-10">
                         <h3 className="text-xl font-bold text-white mb-8 flex items-center gap-3">
-                             Published Works 
-                             <span className="text-[10px] bg-brand-primary/20 text-brand-primary px-3 py-1 rounded-full border border-brand-primary/10 tracking-widest uppercase">
-                                 {projectsList.length} Total
-                             </span>
+                            Published Works
+                            <span className="text-[10px] bg-brand-primary/20 text-brand-primary px-3 py-1 rounded-full border border-brand-primary/10 tracking-widest uppercase">
+                                {projectsList.length} Total
+                            </span>
                         </h3>
-                        
+
                         <div className="space-y-6">
                             {projectsList.length > 0 ? (
                                 projectsList.map((item) => (
-                                    <div 
-                                        key={item._id} 
+                                    <div
+                                        key={item._id}
                                         draggable
                                         onDragStart={(e) => handleDragStart(e, projectsList.indexOf(item))}
                                         onDragEnter={(e) => handleDragEnter(e, projectsList.indexOf(item))}
@@ -237,22 +238,22 @@ const ProjectCard = () => {
                                                     {item.link} <FaExternalLinkAlt size={10} />
                                                 </a>
                                             </div>
-                                            
+
                                             <p className="text-slate-500 text-sm leading-relaxed whitespace-pre-wrap">{item.description}</p>
-                                            
-                                            <div className="flex flex-wrap gap-2">
+
+                                            <div className="flex flex-wrap gap-2 pt-2">
                                                 {item.technologies?.map((tech, i) => (
-                                                    <span key={i} className="px-3 py-1 bg-white/5 rounded-full text-[10px] font-bold text-slate-400 border border-white/5 flex items-center gap-1.5 hover:text-brand-primary hover:bg-white/10 transition-colors">
-                                                        <FaTerminal size={8} className="text-brand-primary" /> {tech}
+                                                    <span key={i} className="px-3 py-1.5 bg-brand-primary/5 rounded-full text-[10px] font-bold text-slate-400 border border-brand-primary/10 flex items-center gap-2 hover:text-brand-primary hover:bg-brand-primary/10 transition-all cursor-default">
+                                                        <FaTerminal size={8} className="text-brand-primary/50" /> {tech}
                                                     </span>
                                                 ))}
                                             </div>
                                         </div>
 
-                                        <div className="flex items-start md:items-center">
-                                            <button 
-                                                onClick={() => handleDeleteProject(item._id)} 
-                                                className="p-4 bg-red-500/10 text-red-400 hover:bg-red-500 hover:text-white transition-all rounded-2xl border border-red-500/20 group-hover:scale-105"
+                                        <div className="flex items-center md:items-start justify-end">
+                                            <button
+                                                onClick={() => handleDeleteProject(item._id)}
+                                                className="p-4 bg-red-500/10 text-red-500 hover:bg-red-500 hover:text-white transition-all rounded-2xl border border-red-500/10 group-hover:scale-105 active:scale-95 shadow-lg shadow-red-500/5"
                                                 title="Delete Project"
                                             >
                                                 <FaTrash size={16} />

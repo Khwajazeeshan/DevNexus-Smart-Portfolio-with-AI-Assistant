@@ -2,7 +2,7 @@
 import React, { useEffect, useState, forwardRef } from "react";
 import axios from "axios";
 
-const About = forwardRef(({ onComplete }, ref) => {
+const About = forwardRef(({ onComplete, onReady }, ref) => {
     const [aboutData, setAboutData] = useState(null);
     const [loading, setLoading] = useState(true);
 
@@ -22,6 +22,7 @@ const About = forwardRef(({ onComplete }, ref) => {
                 console.error('Error fetching about data:', error);
             } finally {
                 setLoading(false);
+                if (onReady) onReady();
             }
         };
         fetchAboutData();
@@ -66,12 +67,7 @@ const About = forwardRef(({ onComplete }, ref) => {
 
     return (
         <section ref={ref} className=" flex items-center justify-center pt-30 px-5 overflow-hidden">
-            {loading ? (
-                <div className="flex flex-col items-center gap-4">
-                    <div className="w-12 h-12 border-4 border-brand-primary border-t-transparent rounded-full animate-spin"></div>
-                    <p className="text-slate-400 font-medium animate-pulse">Loading Profile...</p>
-                </div>
-            ) : !aboutData ? (
+            {loading ? null : !aboutData ? (
                 <div className="glass p-8 rounded-2xl text-center max-w-md">
                     <p className="text-slate-300">No profile data found. Please set it up in the dashboard.</p>
                 </div>

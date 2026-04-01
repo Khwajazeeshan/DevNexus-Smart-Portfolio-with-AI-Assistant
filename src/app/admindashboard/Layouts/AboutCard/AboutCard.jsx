@@ -97,41 +97,43 @@ export default function AboutCard() {
   }
 
   return (
-    <div className="min-h-screen bg-[#020617] text-slate-200 p-8">
+    <div className="min-h-screen bg-[#020617] text-slate-200 px-4 py-8 md:p-8">
       <Toaster position="top-right" />
       
       <div className="max-w-4xl mx-auto">
-        <header className="flex justify-between items-center mb-10">
+        <header className="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-4">
           <div>
             <Link href="/admindashboard" className="flex items-center gap-2 text-slate-400 hover:text-white transition-colors mb-4 group">
               <FaArrowLeft className="group-hover:-translate-x-1 transition-transform" />
               <span>Back to Dashboard</span>
             </Link>
-            <h1 className="text-3xl font-bold text-white">About Section</h1>
+            <h1 className="text-3xl md:text-4xl font-bold text-white tracking-tight">About Section</h1>
           </div>
         </header>
 
-        <form onSubmit={handleSubmit} className="space-y-8 bg-slate-900/50 border border-white/5 p-10 rounded-[2.5rem] shadow-2xl">
+        <form onSubmit={handleSubmit} className="space-y-8 bg-slate-900/50 border border-white/5 p-6 md:p-10 rounded-[2.5rem] shadow-2xl backdrop-blur-xl">
           {/* Image Upload */}
           <div className="space-y-4">
             <label className="flex items-center gap-2 text-sm font-bold text-slate-400 uppercase tracking-widest">
               <FaUser size={14} className="text-brand-primary" /> Profile Image
             </label>
-            <div className="flex items-start gap-8">
-              <div className="w-40 h-40 rounded-3xl overflow-hidden bg-slate-800 border-2 border-dashed border-white/10 flex items-center justify-center group relative cursor-pointer">
+            <div className="flex flex-col md:flex-row items-start gap-6 md:gap-8">
+              <div className="relative w-full md:w-40 h-48 md:h-40 rounded-3xl overflow-hidden bg-slate-800 border-2 border-dashed border-white/10 flex items-center justify-center group cursor-pointer transition-all hover:border-brand-primary/50">
                 {imagePreview ? (
                   <img src={imagePreview} alt="Profile" className="w-full h-full object-cover transition-opacity group-hover:opacity-50" />
                 ) : (
                   <FaCloudUploadAlt size={40} className="text-slate-600" />
                 )}
                 <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/40">
-                  <span className="text-xs font-bold text-white uppercase transform translate-y-2 group-hover:translate-y-0 transition-transform">Upload New</span>
+                  <span className="text-xs font-bold text-white uppercase translate-y-2 group-hover:translate-y-0 transition-transform">Upload New</span>
                 </div>
-                <input type="file" onChange={handleImageChange} accept="image/*" className="absolute inset-0 opacity-0 cursor-pointer" />
+                <input type="file" onChange={handleImageChange} accept="image/*" className="absolute inset-0 opacity-0 cursor-pointer" title="Upload Image" />
               </div>
-              <div className="flex-1 space-y-2">
+              <div className="flex-1 space-y-4">
                 <p className="text-slate-400 text-sm leading-relaxed">Recommended size: 500x500px. JPG, PNG or WebP format. Max 2MB.</p>
-                <button type="button" onClick={() => {setImage(null); setImagePreview(null);}} className="text-xs text-red-400 hover:text-red-300 transition-colors uppercase font-bold tracking-widest">Remove Image</button>
+                <button type="button" onClick={() => {setImage(null); setImagePreview(null);}} className="text-xs text-red-400/80 hover:text-red-400 transition-colors uppercase font-bold tracking-widest flex items-center gap-2 px-4 py-2 bg-red-500/5 rounded-lg border border-red-500/10 hover:border-red-500/30">
+                  <FaTrash size={10} /> Remove Image
+                </button>
               </div>
             </div>
           </div>
@@ -219,13 +221,13 @@ export default function AboutCard() {
             )}
           </div>
 
-          <div className="pt-6 flex justify-end">
+          <div className="pt-6 flex justify-center md:justify-end">
             <button
               type="submit"
               disabled={isSubmitting}
-              className="px-12 py-4 bg-brand-primary hover:bg-violet-600 text-white font-bold rounded-2xl transition-all shadow-lg shadow-brand-primary/20 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-3"
+              className="w-full md:w-auto px-12 py-5 bg-brand-primary hover:bg-violet-600 text-white font-black rounded-2xl transition-all shadow-xl shadow-brand-primary/20 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3"
             >
-              {isSubmitting ? <><FaSpinner className="animate-spin" /> Saving...</> : 'Save Changes'}
+              {isSubmitting ? <><FaSpinner className="animate-spin" /> Saving Tasks...</> : 'Confirm Updates'}
             </button>
           </div>
         </form>

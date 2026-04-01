@@ -69,21 +69,22 @@ export default function AdminCVPage() {
     };
 
     return (
-        <div className="min-h-screen bg-[#020617] text-slate-200 p-8">
+        <div className="min-h-screen bg-[#020617] text-slate-200 px-4 py-8 md:p-8">
             <Toaster position="top-right" />
             
             <div className="max-w-3xl mx-auto">
-                <header className="flex justify-between items-center mb-10">
+                <header className="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-6">
                     <div>
-                        <Link href="/admindashboard" className="flex items-center gap-2 text-slate-400 hover:text-white transition-colors mb-4 group">
+                        <Link href="/admindashboard" className="flex items-center gap-2 text-slate-400 hover:text-white transition-colors mb-4 group w-fit">
                             <FaArrowLeft className="group-hover:-translate-x-1 transition-transform" />
                             <span>Back to Dashboard</span>
                         </Link>
-                        <h1 className="text-3xl font-bold text-white">Resume / CV File</h1>
+                        <h1 className="text-3xl md:text-4xl font-bold text-white tracking-tight">Portfolio Resume</h1>
+                        <p className="text-slate-400 text-sm mt-1 font-medium italic opacity-80">Upload and manage your downloadable professional file.</p>
                     </div>
                 </header>
 
-                <div className="space-y-8 bg-slate-900/50 border border-white/5 p-10 rounded-[2.5rem] shadow-2xl">
+                <div className="space-y-8 bg-slate-900/50 border border-white/5 p-6 md:p-10 rounded-[2.5rem] shadow-2xl backdrop-blur-xl">
                     <div className="space-y-6">
                         <label className="text-sm font-bold text-slate-400 uppercase tracking-widest">Upload New Resume (PDF)</label>
                         
@@ -94,7 +95,7 @@ export default function AdminCVPage() {
                                 onChange={handleFileChange}
                                 className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
                             />
-                            <div className={`border-2 border-dashed ${selectedFile ? 'border-brand-primary bg-brand-primary/5' : 'border-white/10 bg-slate-800/50'} rounded-3xl p-12 text-center transition-all group-hover:border-brand-primary/50`}>
+                            <div className={`border-2 border-dashed ${selectedFile ? 'border-brand-primary bg-brand-primary/5' : 'border-white/10 bg-slate-800/50'} rounded-3xl p-8 md:p-12 text-center transition-all group-hover:border-brand-primary/50`}>
                                 <div className="flex flex-col items-center gap-4">
                                     <div className={`p-4 rounded-2xl ${selectedFile ? 'bg-brand-primary text-white' : 'bg-slate-800 text-slate-500'} transition-all`}>
                                         <FaCloudUploadAlt size={32} />
@@ -135,20 +136,22 @@ export default function AdminCVPage() {
                                     <div className="p-3 bg-red-500/10 text-red-500 rounded-xl">
                                         <FaFilePdf size={24} />
                                     </div>
-                                    <div>
-                                        <p className="text-white font-bold">Active Resume</p>
-                                        <p className="text-slate-500 text-xs truncate max-w-[200px] md:max-w-md">{resumeUrl.split("/").pop()}</p>
+                                    <div className="flex-1 min-w-0">
+                                        <p className="text-white font-bold truncate">Active Portfolio Resume</p>
+                                        <p className="text-slate-500 text-xs truncate opacity-70 mt-0.5">{resumeUrl.split("/").pop()}</p>
                                     </div>
                                 </div>
-                                <a 
-                                    href={resumeUrl} 
-                                    target="_blank" 
-                                    rel="noopener noreferrer" 
-                                    className="p-3 bg-white/5 text-slate-400 hover:text-brand-secondary hover:bg-white/10 rounded-xl transition-all"
-                                    title="View Current Resume"
-                                >
-                                    <FaExternalLinkAlt size={18} />
-                                </a>
+                                <div className="flex items-center gap-2">
+                                    <a 
+                                        href={resumeUrl} 
+                                        target="_blank" 
+                                        rel="noopener noreferrer" 
+                                        className="p-4 bg-brand-primary/10 text-brand-primary hover:bg-brand-primary hover:text-white rounded-2xl transition-all shadow-lg active:scale-95"
+                                        title="View Current Resume"
+                                    >
+                                        <FaExternalLinkAlt size={16} />
+                                    </a>
+                                </div>
                             </div>
                         ) : (
                             <div className="p-8 bg-white/5 rounded-3xl border border-dashed border-white/10 text-center">

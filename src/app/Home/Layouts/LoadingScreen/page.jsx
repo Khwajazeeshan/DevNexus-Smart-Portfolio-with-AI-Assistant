@@ -1,15 +1,18 @@
 "use client";
 import React, { useState, useEffect } from "react";
 
-const LoadingScreen = ({ onComplete }) => {
+const LoadingScreen = ({ onComplete, isReady }) => {
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
     const timer = setInterval(() => {
       setProgress((oldProgress) => {
         if (oldProgress >= 100) {
-          clearInterval(timer);
-          setTimeout(onComplete, 500); // Small delay after reaching 100
+          if (isReady) {
+            clearInterval(timer);
+            setTimeout(onComplete, 500);
+            return 100;
+          }
           return 100;
         }
         const diff = Math.random() * 15;
@@ -18,7 +21,7 @@ const LoadingScreen = ({ onComplete }) => {
     }, 150);
 
     return () => clearInterval(timer);
-  }, [onComplete]);
+  }, [onComplete, isReady]);
 
   return (
     <div className="fixed inset-0 z-[9999] bg-[#020617] flex flex-col items-center justify-center">
