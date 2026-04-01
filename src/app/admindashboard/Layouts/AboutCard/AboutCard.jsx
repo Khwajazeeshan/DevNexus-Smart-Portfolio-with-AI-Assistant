@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
-import { FaArrowLeft, FaCloudUploadAlt, FaSpinner, FaUser, FaQuoteLeft, FaTools } from "react-icons/fa";
+import { FaArrowLeft, FaCloudUploadAlt, FaSpinner, FaUser, FaQuoteLeft, FaTools, FaTrash } from "react-icons/fa";
 import Link from 'next/link';
 
 export default function AboutCard() {

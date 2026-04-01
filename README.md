@@ -67,6 +67,7 @@ CLOUDINARY_API_SECRET=your_api_secret
 GROQ_API_KEY=your_groq_key_for_chatbot
 JWT_SECRET=your_secret_key
 Refresh_Key=your_Refresh_Key
+Password=enter-your-password-to-access-dashbaord
 ```
 
 ### 3. Run Development Server
@@ -74,6 +75,11 @@ Refresh_Key=your_Refresh_Key
 npm run dev
 ```
 Open [http://localhost:3000](http://localhost:3000) to see the portfolio live.
+
+### 4. Accessing the Admin Dashboard
+To modify your portfolio content, navigate to the local login page:
+- **URL**: [http://localhost:3000/Login](http://localhost:3000/Login)
+- **Dashboard**: Once authenticated, you will be redirected to the comprehensive [Admin Dashboard](http://localhost:3000/admindashboard).
 
 ---
 
