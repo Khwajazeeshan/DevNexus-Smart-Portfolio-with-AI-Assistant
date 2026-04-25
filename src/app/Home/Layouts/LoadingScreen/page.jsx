@@ -24,47 +24,56 @@ const LoadingScreen = ({ onComplete, isReady }) => {
   }, [onComplete, isReady]);
 
   return (
-    <div className="fixed inset-0 z-[9999] bg-[#020617] flex flex-col items-center justify-center">
-      <div className="relative flex items-center justify-center w-48 h-48">
-        {/* Animated Background Ring */}
-        <div className="absolute inset-0 border-4 border-white/5 rounded-full" />
-        
-        {/* Progress Ring */}
-        <svg className="w-full h-full -rotate-90">
-          <circle
-            cx="96"
-            cy="96"
-            r="88"
-            fill="transparent"
-            stroke="currentColor"
-            strokeWidth="4"
-            strokeDasharray={552.92} /* 2 * PI * r */
-            strokeDashoffset={552.92 - (552.92 * progress) / 100}
-            className="text-brand-primary transition-all duration-300 ease-out shadow-[0_0_20px_rgba(139,92,246,0.3)]"
-          />
-        </svg>
-
-        {/* Center Content */}
-        <div className="absolute flex flex-col items-center">
-          <span className="text-4xl font-black text-white tracking-tighter">
-            {Math.round(progress)}%
-          </span>
-          <span className="text-[10px] uppercase tracking-[0.3em] font-bold text-slate-500 mt-1">
-            Loading
-          </span>
+    <div className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-bg-primary text-text-primary overflow-hidden">
+      <div className="absolute w-[40rem] h-[40rem] bg-accent/5 rounded-full blur-[100px] animate-pulse" />
+      
+      <div className="relative flex flex-col items-center animate-fadeInUp">
+        <div className="relative flex items-center justify-center w-40 h-40">
+          <svg className="absolute inset-0 w-full h-full -rotate-90">
+            <circle
+              cx="80"
+              cy="80"
+              r="74"
+              fill="transparent"
+              stroke="currentColor"
+              strokeWidth="2"
+              className="text-border-color/50"
+            />
+            <circle
+              cx="80"
+              cy="80"
+              r="74"
+              fill="transparent"
+              stroke="currentColor"
+              strokeWidth="4"
+              strokeDasharray={464.96}
+              strokeDashoffset={464.96 - (464.96 * progress) / 100}
+              strokeLinecap="round"
+              className="text-accent transition-all duration-300 drop-shadow-[0_0_8px_rgba(79,70,229,0.5)]"
+            />
+          </svg>
+          <div className="flex flex-col items-center animate-glowPulse bg-bg-card/50 backdrop-blur-sm rounded-full w-28 h-28 justify-center shadow-custom">
+            <span className="text-3xl font-heading font-bold text-text-primary tracking-tighter">
+              {Math.round(progress)}<span className="text-xl text-accent">%</span>
+            </span>
+            <span className="text-[10px] uppercase tracking-widest text-text-secondary mt-1 font-medium">
+              Loading
+            </span>
+          </div>
         </div>
       </div>
 
-      {/* Brand Label */}
-      <div className="mt-12 text-center animate-fade-in">
-        <h2 className="text-2xl font-bold text-white tracking-widest uppercase">
-          Khawaja <span className="text-brand-secondary">Zeeshan</span>
+      <div className="absolute bottom-16 flex flex-col items-center animate-fadeInUp" style={{ animationDelay: '0.2s' }}>
+        <h2 className="text-2xl font-heading font-bold tracking-tight bg-bg-card/30 backdrop-blur-md px-6 py-2 rounded-2xl border border-white/10 dark:border-white/5 shadow-custom animate-glowPulse">
+          Khawaja <span className="bg-gradient-to-r from-accent to-accent-2 bg-clip-text text-transparent">Zeeshan</span>
         </h2>
-        <div className="mt-2 flex items-center justify-center gap-2">
-          <div className="w-1.5 h-1.5 rounded-full bg-brand-primary animate-pulse" />
-          <span className="text-xs text-slate-500 font-medium uppercase tracking-[0.2em]">
-            Porfolio Experience
-          </span>
+        <div className="flex items-center gap-4 mt-6 w-64">
+          <div className="h-1 w-full bg-border-color rounded-full overflow-hidden">
+            <div 
+              className="h-full bg-gradient-to-r from-accent to-accent-2 transition-all duration-300 ease-out rounded-full shadow-[0_0_10px_rgba(79,70,229,0.5)]"
+              style={{ width: `${progress}%` }}
+            />
+          </div>
         </div>
       </div>
     </div>

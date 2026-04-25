@@ -36,37 +36,47 @@ const Project = forwardRef(({ onComplete }, ref) => {
     }, [onComplete]);
 
     return (
-        <section ref={ref} className="py-1 px-6 max-w-7xl mx-auto w-full">
-            <div className="text-center mb-16">
-                <h2 className="text-3xl md:text-5xl font-bold mb-4">Featured <span className="text-gradient">Projects</span></h2>
-                <div className="w-20 h-1.5 bg-brand-primary mx-auto rounded-full"></div>
-                <p className="mt-6 text-slate-400 max-w-2xl mx-auto">A selection of my recent works, ranging from web applications to AI-powered solutions.</p>
+        <section ref={ref} className="relative py-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto z-10 w-full overflow-hidden">
+            <div className="absolute left-[-10%] top-1/2 w-96 h-96 bg-accent-2/5 rounded-full blur-[100px] -z-10 animate-float" style={{ animationDelay: '3s' }} />
+            
+            <div className="text-center mb-16 animate-fadeInUp">
+                <h2 className="text-3xl sm:text-4xl md:text-5xl font-heading font-extrabold text-text-primary tracking-tight mb-4 sm:mb-6">
+                    Featured <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-accent-2">Innovations</span>
+                </h2>
+                <p className="text-base sm:text-lg text-text-secondary max-w-2xl mx-auto font-medium px-4">
+                    "Crafting digital excellence through code and creativity."
+                </p>
+                <div className="flex justify-center items-center gap-2 mt-6 sm:mt-8">
+                    <span className="w-8 sm:w-12 h-1 bg-gradient-to-r from-transparent to-accent rounded-full"></span>
+                    <span className="w-2.5 sm:w-3 h-2.5 sm:h-3 bg-accent rounded-full animate-glowPulse"></span>
+                    <span className="w-8 sm:w-12 h-1 bg-gradient-to-l from-transparent to-accent rounded-full"></span>
+                </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-
-
-                {/* Dynamically Loaded Projects */}
-                {displayedProjects.map((project, index) => (
-                    <ProjectCard
-                        key={index}
-                        title={project.name}
-                        link={ensureHttps(project.link)}
-                        description={project.description}
-                        technologies={project.technologies}
-                    />
-                ))}
-
-              
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-auto">
+                {displayedProjects.map((project, index) => {
+                    const isWider = index % 4 === 0 || index % 4 === 3;
+                    return (
+                        <ProjectCard
+                            key={index}
+                            title={project.name}
+                            link={ensureHttps(project.link)}
+                            description={project.description}
+                            technologies={project.technologies}
+                            isWider={isWider}
+                        />
+                    );
+                })}
             </div>
 
             {projects.length > 6 && (
-                <div className="flex justify-center mt-12">
+                <div className="text-center mt-12 sm:mt-16 animate-fadeInUp">
                     <button
-                        className="px-10 py-3 rounded-full bg-slate-900 border border-slate-700 text-slate-300 font-semibold hover:border-brand-primary hover:text-white transition-all duration-300"
+                        className="inline-flex items-center justify-center gap-2 px-6 py-2.5 sm:px-8 sm:py-3 rounded-full bg-gradient-to-r from-accent to-accent-2 text-white text-sm sm:text-base font-bold tracking-wide shadow-custom hover:shadow-[0_0_30px_rgba(79,70,229,0.4)] hover:scale-[1.03] active:scale-[0.97] transition-all duration-300"
                         onClick={() => setShowAll(!showAll)}
                     >
-                        {showAll ? "View Less" : "Load All Projects"}
+                        <span>{showAll ? "View Less" : "Load All Projects"}</span>
+                        <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-white rounded-full opacity-60"></div>
                     </button>
                 </div>
             )}
@@ -74,61 +84,47 @@ const Project = forwardRef(({ onComplete }, ref) => {
     );
 });
 
-const ProjectCard = ({ title, subtitle, link, description, technologies, isHighlighted = false, isGithubLink = false }) => (
-    <a
-        href={link}
-        target="_blank"
-        rel="noopener noreferrer"
-        className={`group relative flex flex-col h-full overflow-hidden rounded-[2.5rem] border transition-all duration-500 hover:-translate-y-2 shadow-xl ${isHighlighted
-                ? "bg-gradient-to-br from-brand-primary/10 via-slate-950 to-bg-dark border-brand-primary/20"
-                : "bg-slate-900/40 border-white/5 hover:border-brand-primary/40 backdrop-blur-xl"
-            }`}
-    >
-        <div className="p-8 md:p-10 flex flex-col h-full relative z-10">
-            <div className="flex justify-between items-start mb-8">
-                <div className={`p-4 rounded-2xl ${isHighlighted ? "bg-brand-primary text-white shadow-lg shadow-brand-primary/30" : "bg-slate-800 text-brand-primary"}`}>
-                    {isGithubLink ? <FaGithub size={24} /> : <FaFolder size={24} />}
+const ProjectCard = ({ title, subtitle, link, description, technologies, isHighlighted = false, isGithubLink = false, isWider }) => (
+    <div className={`group relative rounded-[2rem] overflow-hidden bg-bg-card border border-border-color shadow-sm hover:shadow-custom hover:-translate-y-2 transition-all duration-500 ease-out flex flex-col ${isWider ? 'lg:col-span-2' : 'lg:col-span-1'}`}>
+        
+        {/* Aesthetic Thumbnail / Placeholder Wrapper */}
+      
+
+        {/* Card Body */}
+        <div className="p-6 md:p-8 flex-1 flex flex-col relative z-10 bg-bg-card">
+            <div className="flex justify-between items-start mb-4">
+                <div className="p-3 bg-bg-primary/50 border border-border-color rounded-xl text-accent group-hover:bg-accent group-hover:text-white transition-all duration-500 transform group-hover:rotate-6">
+                    {isGithubLink ? <FaGithub size={20} /> : <FaFolder size={20} />}
                 </div>
-                <div className="relative text-slate-600 group-hover:text-brand-primary transition-colors p-2 rounded-full overflow-hidden">
-                    {/* Pulsing Aura Effect */}
-                    <div className="absolute inset-0 bg-current opacity-20 animate-pulse rounded-full"></div>
-                    <div className="relative z-10">
-                        <FaExternalLinkAlt size={18} />
-                    </div>
-                </div>
+                <a href={link} target="_blank" rel="noopener noreferrer" className="p-2 text-text-secondary hover:text-accent transition-colors duration-300 z-10">
+                    <FaExternalLinkAlt size={16} className="transform group-hover:scale-110 transition-transform animate-liveBlink" />
+                </a>
             </div>
 
-            <div className="mb-6">
-                <h3 className={`text-2xl font-black mb-3 tracking-tight group-hover:text-brand-primary transition-colors ${isHighlighted ? "text-white" : "text-slate-200"}`}>
-                    {title}
-                </h3>
+            <h3 className="text-2xl font-heading font-bold text-text-primary mb-3 transition-colors duration-300 truncate">
+                {title}
+            </h3>
 
-                {description ? (
-                    <p className="text-sm text-slate-500 leading-relaxed font-medium line-clamp-3">
-                        {description}
-                    </p>
-                ) : subtitle ? (
-                    <p className="text-sm text-slate-500 leading-relaxed font-medium">
-                        {subtitle}
-                    </p>
-                ) : null}
-            </div>
+            <p className="text-text-secondary leading-relaxed mb-6 line-clamp-3 md:line-clamp-4">
+                {description || subtitle || "A sophisticated technical project pushing the boundaries of modern development."}
+            </p>
 
-            {/* Technologies Row with Icons */}
+            {/* Technologies */}
             {technologies && technologies.length > 0 && (
-                <div className="mt-auto pt-6 flex flex-wrap gap-2.5 border-t border-white/5">
+                <div className="flex flex-wrap gap-2 mt-auto">
                     {technologies.map((tech, i) => (
-                        <span key={i} className="px-3.5 py-1.5 bg-white/5 rounded-full text-[10px] font-bold text-slate-300 hover:text-brand-primary hover:bg-white/10 transition-all border border-white/5 flex items-center gap-1.5 shadow-sm">
-                            <FaTerminal size={8} className="text-brand-primary/70" /> {tech}
+                        <span 
+                            key={i} 
+                            className="px-3 py-1 text-xs font-medium bg-bg-primary text-text-secondary rounded-lg border border-border-color shadow-sm group-hover:border-accent/30 transition-colors duration-300 animate-techBlink"
+                            style={{ animationDelay: `${i * 1.5}s` }}
+                        >
+                            {tech}
                         </span>
                     ))}
                 </div>
             )}
         </div>
-
-        {/* Dynamic Glow Effect */}
-        <div className="absolute inset-0 bg-gradient-to-tr from-brand-primary/0 via-brand-primary/0 to-brand-primary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
-    </a>
+    </div>
 )
 
 Project.displayName = "Project";

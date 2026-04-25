@@ -43,34 +43,37 @@ export default function Login() {
     };
 
     return (
-        <div className="min-h-screen bg-bg-dark flex items-center justify-center p-6 relative overflow-hidden">
-            <Toaster position="top-center" reverseOrder={false} />
+        <div className="relative min-h-screen bg-bg-primary flex items-center justify-center p-4 overflow-hidden">
+            <Toaster position="top-center" reverseOrder={false} toastOptions={{ className: 'font-body rounded-2xl bg-bg-card text-text-primary shadow-custom border border-border-color' }} />
 
-            {/* Background Decoration */}
-            <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-                <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-brand-primary/10 rounded-full blur-[120px]"></div>
-                <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-brand-secondary/10 rounded-full blur-[120px]"></div>
+            {/* Background Decoration: Animated floating ORBS */}
+            <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+                <div className="absolute top-1/4 -left-32 w-96 h-96 bg-accent/30 rounded-full mix-blend-multiply dark:mix-blend-lighten filter blur-[100px] opacity-70 animate-float" style={{ animationDuration: '8s' }}></div>
+                <div className="absolute bottom-1/4 -right-32 w-96 h-96 bg-accent-2/30 rounded-full mix-blend-multiply dark:mix-blend-lighten filter blur-[100px] opacity-70 animate-float" style={{ animationDelay: '2s', animationDuration: '9s' }}></div>
             </div>
 
-            <Link href="/" className="absolute top-8 left-8 text-slate-400 hover:text-white flex items-center gap-2 group transition-colors">
+            <Link href="/" className="absolute top-8 left-8 z-20 flex items-center gap-2 text-text-secondary hover:text-accent font-medium transition-all group px-4 py-2 bg-bg-card/50 backdrop-blur-md rounded-xl border border-white/10 shadow-sm">
                 <FaArrowLeft className="group-hover:-translate-x-1 transition-transform" />
-                <span className="font-medium text-sm">Back to Portfolio</span>
+                <span>Return to Portfolio</span>
             </Link>
 
-            <div className="w-full max-w-md animate-fade-in relative z-10">
-                <div className="glass p-10 rounded-[2.5rem] border border-white/5 shadow-2xl">
-                    <div className="flex flex-col items-center text-center mb-10">
-                        <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-brand-primary to-brand-secondary flex items-center justify-center text-white shadow-lg shadow-brand-primary/20 mb-6 group">
-                            <FaLock size={24} className="group-hover:rotate-12 transition-transform" />
-                        </div>
-                        <h2 className="text-3xl font-bold text-white mb-2">Admin Panel</h2>
-                        <p className="text-slate-400 text-sm">Enter your secure password to proceed</p>
+            <div className="relative z-10 w-full max-w-md animate-fadeInUp">
+                {/* Centered Glassmorphism Card */}
+                <div className="backdrop-blur-xl bg-white/30 dark:bg-white/5 border border-white/20 dark:border-white/10 p-10 rounded-[2rem] shadow-[0_8px_32px_rgba(31,38,135,0.15)] flex flex-col items-center text-center group transition-all duration-500 hover:shadow-[0_8px_40px_rgba(79,70,229,0.2)] hover:border-accent/30">
+                    <div className="w-20 h-20  rounded-3xl flex items-center justify-center text-white shadow-custom mb-8 transform group-hover:rotate-6 transition-transform duration-500">
+                        <img 
+                            src="/logo-2.png" 
+                            alt="Khawaja Zeeshan Logo" 
+                            className="h-12 w-auto object-contain group-hover:scale-105 transition-transform duration-300" 
+                        />
                     </div>
+                    <h2 className="text-3xl font-heading font-black text-text-primary mb-3">Admin Portal</h2>
+                    <p className="text-text-secondary font-medium mb-8">Authenticate to access management console</p>
 
-                    <div className="space-y-6">
-                        <div className="relative group flex items-center">
-                            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-500 group-focus-within:text-brand-primary transition-colors">
-                                <FaLock size={16} />
+                    <div className="w-full space-y-6">
+                        <div className="relative group/input">
+                            <div className="absolute left-4 top-1/2 -translate-y-1/2 text-text-secondary group-focus-within/input:text-accent transition-colors">
+                                <FaLock size={18} />
                             </div>
                             <input
                                 type={showPassword ? "text" : "password"}
@@ -78,45 +81,46 @@ export default function Login() {
                                 onChange={(e) => setPassword(e.target.value)}
                                 onKeyPress={handleKeyPress}
                                 placeholder="Enter Access Code"
-                                className="w-full bg-slate-900/50 border border-white/10 rounded-2xl py-4 pl-12 pr-12 text-white placeholder-slate-500 focus:outline-none focus:border-brand-primary/50 focus:ring-4 focus:ring-brand-primary/10 transition-all"
+                                className="w-full pl-12 pr-12 py-4 bg-bg-card/80 border border-white/20 dark:border-white/10 rounded-2xl outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent transition-all text-text-primary placeholder:text-text-secondary/50 font-medium"
                                 disabled={loading}
                             />
                             <button
                                 type="button"
                                 onClick={() => setShowPassword(!showPassword)}
-                                className="absolute inset-y-0 right-0 pr-4 flex items-center text-slate-500 hover:text-white transition-colors"
+                                className="absolute right-4 top-1/2 -translate-y-1/2 text-text-secondary hover:text-accent transition-colors outline-none"
                             >
-                                {showPassword ? <FaEyeSlash size={18} /> : <FaEye size={18} />}
+                                {showPassword ? <FaEyeSlash size={20} /> : <FaEye size={20} />}
                             </button>
                         </div>
 
                         <button
                             onClick={handleLogin}
                             disabled={loading}
-                            className="w-full bg-brand-primary hover:bg-violet-600 text-white font-bold py-4 rounded-2xl transition-all duration-300 flex items-center justify-center gap-3 shadow-lg shadow-brand-primary/20 active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed overflow-hidden relative group"
+                            className="w-full py-4 bg-gradient-to-r from-accent to-accent-2 text-white font-bold rounded-2xl flex items-center justify-center gap-2 hover:opacity-90 transition-all hover:scale-[1.02] active:scale-[0.98] shadow-custom disabled:opacity-70 disabled:cursor-not-allowed group/btn"
                         >
                             {loading ? (
-                                <div className="flex items-center gap-2">
-                                    <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                                <div className="flex items-center gap-3">
+                                    <div className="w-5 h-5 border-2 border-white/20 border-t-white rounded-full animate-spin"></div>
                                     <span>Authenticating...</span>
                                 </div>
                             ) : (
                                 <>
                                     <span>Sign into Dashboard</span>
-                                    <FaSignInAlt className="group-hover:translate-x-1 transition-transform" />
+                                    <FaSignInAlt className="group-hover/btn:translate-x-1 transition-transform" />
                                 </>
                             )}
                         </button>
                     </div>
 
-                    <div className="mt-8 text-center">
-                        <p className="text-xs text-slate-600 font-medium">SHIELDED AUTHENTICATION SYSTEM</p>
+                    <div className="mt-8 border-t border-border-color/30 w-full pt-6">
+                        <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-text-secondary/60">
+                            Shielded Authentication System
+                        </p>
                     </div>
                 </div>
             </div>
         </div>
     );
 };
-
 
 

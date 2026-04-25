@@ -1,12 +1,34 @@
 "use client";
-import React, { useState, useEffect, forwardRef } from "react";
+import React, { useState, useEffect, forwardRef, useRef } from "react";
 import { FaGraduationCap, FaBriefcase, FaCode } from "react-icons/fa";
 
-const Resume = forwardRef(({ onComplete }, ref) => {
-    const [showMore, setShowMore] = useState(false);
+const Resume = forwardRef(({ onComplete }, outerRef) => {
+    const [showMoreExperience, setShowMoreExperience] = useState(false);
+    const [showMoreSkills, setShowMoreSkills] = useState(false);
+    
     const [educationList, setEducationList] = useState([]);
     const [experienceList, setExperienceList] = useState([]);
     const [skillsList, setSkillsList] = useState([]);
+    const [isVisible, setIsVisible] = useState(false);
+    
+    // We use a local ref for intersection observer if outerRef is just for parent scrolling
+    const sectionRef = useRef(null);
+    const setRefs = (element) => {
+        sectionRef.current = element;
+        if (typeof outerRef === 'function') outerRef(element);
+        else if (outerRef) outerRef.current = element;
+    };
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            (entries) => {
+                if (entries[0].isIntersecting) setIsVisible(true);
+            },
+            { threshold: 0.15 }
+        );
+        if (sectionRef.current) observer.observe(sectionRef.current);
+        return () => observer.disconnect();
+    }, []);
 
     useEffect(() => {
         const fetchResumeData = async () => {
@@ -25,7 +47,8 @@ const Resume = forwardRef(({ onComplete }, ref) => {
         fetchResumeData();
     }, []);
 
-    const visibleSkills = showMore ? skillsList : skillsList.slice(0, 6);
+    const visibleExperience = showMoreExperience ? experienceList : experienceList.slice(0, 4);
+    const visibleSkills = showMoreSkills ? skillsList : skillsList.slice(0, 8);
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -35,104 +58,148 @@ const Resume = forwardRef(({ onComplete }, ref) => {
     }, [onComplete]);
 
     return (
-        <section ref={ref} className="py-15 px-4 max-w-6xl mx-auto w-full">
-            <div className="text-center mb-16">
-                <h2 className="text-3xl md:text-5xl font-bold mb-4">Professional <span className="text-gradient">Resume</span></h2>
-                <div className="w-20 h-1.5 bg-brand-primary mx-auto rounded-full"></div>
+        <section ref={setRefs} className="relative py-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto z-10 w-full overflow-hidden">
+            <div className="absolute right-0 top-1/4 w-96 h-96 bg-accent/5 rounded-full blur-[100px] -z-10 animate-float" />
+            
+            <div className="text-center mb-20 animate-fadeInUp">
+                <h2 className="text-4xl md:text-5xl font-heading font-extrabold text-text-primary tracking-tight mb-6">
+                    Experience & <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-accent-2">Heritage</span>
+                </h2>
+                <p className="text-lg text-text-secondary max-w-2xl mx-auto font-medium">
+                    "A journey of continuous learning and professional excellence."
+                </p>
+                <div className="flex justify-center items-center gap-2 mt-8">
+                    <span className="w-12 h-1 bg-gradient-to-r from-transparent to-accent rounded-full"></span>
+                    <span className="w-3 h-3 bg-accent rounded-full animate-glowPulse"></span>
+                    <span className="w-12 h-1 bg-gradient-to-l from-transparent to-accent rounded-full"></span>
+                </div>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-                {/* Education */}
-                <div className="space-y-8">
-                    <div className="flex items-center gap-4 mb-8">
-                        <div className="p-3 rounded-xl bg-brand-primary/10 text-brand-primary">
-                            <FaGraduationCap size={28} />
-                        </div>
-                        <h3 className="text-2xl font-bold">Education</h3>
-                    </div>
-                    
-                    <div className="relative border-l-2 border-slate-800 ml-6 pl-8 space-y-10">
-                        {educationList.length > 0 ? (
-                            educationList.map((item, index) => (
-                                <div key={index} className="relative group">
-                                    <div className="absolute -left-[41px] top-1 w-5 h-5 rounded-full border-4 border-bg-dark bg-brand-primary group-hover:scale-125 transition-transform duration-300"></div>
-                                    <div className="glass p-6 rounded-2xl border border-white/5 hover:border-brand-primary/30 transition-all duration-300">
-                                        <p className="text-slate-300 font-medium leading-relaxed">{item.education}</p>
-                                    </div>
-                                </div>
-                            ))
-                        ) : (
-                            <p className="text-slate-500 italic">No education details available yet.</p>
-                        )}
-                    </div>
-                </div>
-
-                {/* Experience */}
-                <div className="space-y-8">
-                    <div className="flex items-center gap-4 mb-8">
-                        <div className="p-3 rounded-xl bg-brand-secondary/10 text-brand-secondary">
+            <div className="flex flex-col gap-24 relative">
+                
+                {/* 1. Experience Section */}
+                <div className="relative w-full">
+                    <div className="flex items-center gap-4 mb-12">
+                        <div className="p-4 bg-bg-card border border-border-color rounded-2xl text-accent shadow-custom animate-glowPulse">
                             <FaBriefcase size={28} />
                         </div>
-                        <h3 className="text-2xl font-bold">Experience</h3>
+                        <h3 className="text-3xl font-heading font-bold text-text-primary">Experience</h3>
                     </div>
 
-                    <div className="relative border-l-2 border-slate-800 ml-6 pl-8 space-y-10">
-                        {experienceList.length > 0 ? (
-                            experienceList.map((item, index) => (
-                                <div key={index} className="relative group">
-                                    <div className="absolute -left-[41px] top-1 w-5 h-5 rounded-full border-4 border-bg-dark bg-brand-secondary group-hover:scale-125 transition-transform duration-300"></div>
-                                    <div className="glass p-6 rounded-2xl border border-white/5 hover:border-brand-secondary/30 transition-all duration-300">
-                                        <p className="text-slate-300 font-medium leading-relaxed">{item.experience}</p>
+                    <div className="relative border-l-2 border-border-color pl-10 space-y-12 py-4">
+                        {/* Vertical Line fill */}
+                        <div className={`absolute left-[-2px] top-0 w-[2px] bg-gradient-to-b from-accent to-accent-2 transition-all ease-out duration-[2000ms] ${isVisible ? 'h-full' : 'h-0'}`}></div>
+
+                        {visibleExperience.length > 0 ? (
+                            visibleExperience.map((item, index) => (
+                                <div key={index} className="relative group animate-fadeInUp" style={{ animationDelay: `${(index % 4) * 0.1}s` }}>
+                                    {/* Timeline Node */}
+                                    <div className="absolute top-0 -left-[49px] w-5 h-5 rounded-full bg-bg-primary border-4 border-accent shadow-[0_0_15px_rgba(79,70,229,0.5)] group-hover:scale-150 transition-all duration-300 z-10 animate-glowPulse"></div>
+                                    
+                                    <div className="bg-bg-card p-6 rounded-3xl border border-border-color shadow-sm group-hover:shadow-custom group-hover:-translate-y-2 transition-all duration-500 ease-out group-hover:border-accent/30 relative overflow-hidden">
+                                        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-accent to-accent-2 transform scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-500"></div>
+                                        <p className="text-text-secondary leading-relaxed font-medium">{item.experience}</p>
                                     </div>
                                 </div>
                             ))
                         ) : (
-                            <p className="text-slate-500 italic">No experience details available yet.</p>
+                            <p className="text-text-secondary italic">Charting professional milestones...</p>
                         )}
                     </div>
-                </div>
-            </div>
 
-            {/* Skills */}
-            <div className="mt-20">
-                <div className="flex items-center gap-4 mb-12">
-                    <div className="p-3 rounded-xl bg-violet-500/10 text-violet-400">
-                        <FaCode size={28} />
-                    </div>
-                    <h3 className="text-2xl font-bold">Technical Skills</h3>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {visibleSkills.length > 0 ? (
-                        visibleSkills.map((skill, index) => (
-                            <div key={index} className="glass p-6 rounded-2xl border border-white/5 hover:border-white/10 transition-all group">
-                                <div className="flex justify-between items-center mb-4">
-                                    <span className="font-semibold text-slate-200 group-hover:text-brand-primary transition-colors">{skill.name}</span>
-                                    <span className="text-sm font-medium text-slate-400">{skill.percentage}%</span>
-                                </div>
-                                <div className="h-2 w-full bg-slate-800 rounded-full overflow-hidden">
-                                    <div 
-                                        className="h-full bg-gradient-to-r from-brand-primary to-brand-secondary rounded-full transition-all duration-1000 ease-out shadow-[0_0_10px_rgba(139,92,246,0.3)]"
-                                        style={{ width: `${skill.percentage}%` }}
-                                    ></div>
-                                </div>
-                            </div>
-                        ))
-                    ) : (
-                        <p className="text-slate-500 italic">No skills added yet.</p>
+                    {experienceList.length > 4 && (
+                        <div className="mt-10 text-center w-full pl-10 md:pl-0">
+                            <button
+                                className="inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-xl bg-bg-card border border-border-color text-text-primary font-medium hover:shadow-custom hover:scale-[1.03] active:scale-[0.97] transition-all duration-300 group"
+                                onClick={() => setShowMoreExperience(!showMoreExperience)}
+                            >
+                                <span className="group-hover:text-accent transition-colors">{showMoreExperience ? "Hide" : "Show More"}</span>
+                                <div className="w-2 h-2 rounded-full bg-accent group-hover:animate-glowPulse"></div>
+                            </button>
+                        </div>
                     )}
                 </div>
 
-                {skillsList.length > 6 && (
-                    <div className="flex justify-center mt-12">
-                        <button 
-                            className="px-8 py-3 rounded-full border border-slate-700 hover:border-brand-primary text-slate-300 hover:text-white transition-all font-medium" 
-                            onClick={() => setShowMore(!showMore)}
-                        >
-                            {showMore ? "Show Less" : "Show All Skills"}
-                        </button>
+                {/* 2. Elite Skills Section */}
+                <div className={`transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}>
+                    <div className="flex flex-col items-center mb-16 text-center">
+                        <div className="p-5 bg-gradient-to-br from-bg-card to-bg-primary border border-border-color rounded-full shadow-custom text-accent mb-6 animate-float">
+                            <FaCode size={36} />
+                        </div>
+                        <h3 className="text-3xl font-heading font-bold text-text-primary">Technical Expertise</h3>
                     </div>
-                )}
+
+                    <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-8">
+                        {visibleSkills.length > 0 ? (
+                            visibleSkills.map((skill, index) => (
+                                <div key={index} className="group bg-bg-card p-4 sm:p-6 rounded-3xl border border-border-color hover:border-accent/40 hover:shadow-custom hover:-translate-y-2 transition-all duration-500 ease-out relative overflow-hidden animate-fadeInUp" style={{ animationDelay: `${(index % 6) * 0.1}s` }}>
+                                    <div className="absolute -inset-2 bg-gradient-to-r from-accent/0 via-accent/5 to-accent-2/0 opacity-0 group-hover:opacity-100 group-hover:translate-x-full transition-all duration-1000 transform -translate-x-full skew-x-12"></div>
+                                    <div className="flex justify-between items-end mb-3 sm:mb-4 relative z-10">
+                                        <div className="flex flex-col">
+                                            <span className="text-[8px] sm:text-xs uppercase tracking-wider text-text-secondary font-medium mb-0.5 sm:mb-1">Architecture</span>
+                                            <span className="text-sm sm:text-xl font-heading font-bold text-text-primary group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-accent group-hover:to-accent-2 transition-colors duration-300 truncate max-w-[80px] sm:max-w-none">{skill.name}</span>
+                                        </div>
+                                        <span className="text-accent font-bold text-sm sm:text-lg">{skill.percentage}%</span>
+                                    </div>
+                                    <div className="h-1.5 sm:h-2 w-full bg-border-color rounded-full overflow-hidden relative z-10">
+                                        <div
+                                            className="h-full bg-gradient-to-r from-accent to-accent-2 rounded-full relative group-hover:shadow-[0_0_10px_rgba(79,70,229,0.5)]"
+                                            style={{ 
+                                                width: isVisible ? `${skill.percentage}%` : '0%',
+                                                transition: `width 1.5s cubic-bezier(0.2, 0.8, 0.2, 1) ${index * 0.1}s` 
+                                            }}
+                                        ></div>
+                                    </div>
+                                </div>
+                            ))
+                        ) : (
+                            <p className="text-text-secondary text-center col-span-full">Loading skill matrices...</p>
+                        )}
+                    </div>
+
+                    {skillsList.length > 8 && (
+                        <div className="text-center mt-12">
+                            <button
+                                className="inline-flex items-center justify-center gap-2 px-8 py-3 rounded-full bg-bg-card border border-border-color text-text-primary font-medium hover:shadow-custom hover:scale-[1.03] active:scale-[0.97] transition-all duration-300 group"
+                                onClick={() => setShowMoreSkills(!showMoreSkills)}
+                            >
+                                <span className="group-hover:text-accent transition-colors">{showMoreSkills ? "Hide" : "Show More"}</span>
+                                <div className="w-2 h-2 rounded-full bg-accent group-hover:animate-glowPulse"></div>
+                            </button>
+                        </div>
+                    )}
+                </div>
+
+                {/* 3. Education Section */}
+                <div className="relative w-full">
+                    <div className="flex items-center gap-4 mb-12">
+                        <div className="p-4 bg-bg-card border border-border-color rounded-2xl text-accent-2 shadow-[0_4px_24px_rgba(34,211,238,0.15)] animate-glowPulse" style={{ animationDelay: '1s' }}>
+                            <FaGraduationCap size={28} />
+                        </div>
+                        <h3 className="text-3xl font-heading font-bold text-text-primary">Education</h3>
+                    </div>
+
+                    <div className="relative border-l-2 border-border-color pl-10 space-y-12 py-4">
+                        {/* Vertical Line fill */}
+                        <div className={`absolute left-[-2px] top-0 w-[2px] bg-gradient-to-b from-accent to-accent-2 transition-all ease-out duration-[2000ms] ${isVisible ? 'h-full' : 'h-0'}`}></div>
+
+                        {educationList.length > 0 ? (
+                            educationList.map((item, index) => (
+                                <div key={index} className="relative group animate-fadeInUp" style={{ animationDelay: `${index * 0.1}s` }}>
+                                    <div className="absolute top-0 -left-[49px] w-5 h-5 rounded-full bg-bg-primary border-4 border-accent-2 shadow-[0_0_15px_rgba(34,211,238,0.5)] group-hover:scale-150 transition-all duration-300 z-10 animate-glowPulse" style={{ animationDelay: '1s' }}></div>
+                                    
+                                    <div className="bg-bg-card p-6 rounded-3xl border border-border-color shadow-sm group-hover:shadow-[0_4px_24px_rgba(34,211,238,0.15)] group-hover:-translate-y-2 transition-all duration-500 ease-out group-hover:border-accent-2/30 relative overflow-hidden">
+                                        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-accent-2 to-accent transform scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-500"></div>
+                                        <p className="text-text-secondary leading-relaxed font-medium">{item.education}</p>
+                                    </div>
+                                </div>
+                            ))
+                        ) : (
+                            <p className="text-text-secondary italic">Curating academic history...</p>
+                        )}
+                    </div>
+                </div>
+
             </div>
         </section>
     );
@@ -140,4 +207,3 @@ const Resume = forwardRef(({ onComplete }, ref) => {
 
 Resume.displayName = "Resume";
 export default Resume;
-

@@ -15,9 +15,10 @@ export async function POST(request) {
 
             // Set cookie directly on the response - more reliable in Next.js App Router
             response.cookies.set("Accesstoken", token, {
-                maxAge: 15 * 24 * 60 * 60, // 15 days in SECONDS (not milliseconds)
+                maxAge: 15 * 24 * 60 * 60, // 15 days in SECONDS
+                expires: new Date(Date.now() + 15 * 24 * 60 * 60 * 1000), // 15 days in MILLISECONDS
                 httpOnly: true,
-                sameSite: "lax",            // "lax" works better for same-site navigation
+                sameSite: "lax",
                 secure: process.env.NODE_ENV === "production",
                 path: "/",
             });

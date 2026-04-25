@@ -66,97 +66,120 @@ const About = forwardRef(({ onComplete, onReady }, ref) => {
     }, []);
 
     return (
-        <section ref={ref} className=" flex items-center justify-center pt-30 px-5 overflow-hidden">
-            {loading ? null : !aboutData ? (
-                <div className="glass p-8 rounded-2xl text-center max-w-md">
-                    <p className="text-slate-300">No profile data found. Please set it up in the dashboard.</p>
-                </div>
-            ) : (
-                <div className="max-w-6xl w-full grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-                    {/* Left Content */}
-                    <div className="order-2 lg:order-1 flex flex-col gap-8">
-                        <div>
-                            <div className="flex flex-wrap text-2xl md:text-3xl font-medium text-slate-300 mb-2">
-                                {showIntro && introWords.map((word, i) => (
-                                    <span key={i} className="animate-fade-in opacity-0" style={{ animationDelay: `${i * 0.3}s`, animationFillMode: 'forwards' }}>
-                                        {word}&nbsp;
-                                    </span>
-                                ))}
-                            </div>
-
-                            <div className="text-4xl md:text-6xl font-bold tracking-tight">
-                                {showName && nameLetters.map((letter, i) => (
-                                    <span key={i}
-                                        className={`inline-block animate-slide-up opacity-0 text-gradient ${letter === " " ? "min-w-[0.5em]" : ""}`}
-                                        style={{ animationDelay: `${0.5 + i * 0.05}s`, animationFillMode: 'forwards' }}>
-                                        {letter}
-                                    </span>
-                                ))}
-                            </div>
-                        </div>
-
-                        <div className="space-y-4 max-w-xl">
-                            {visibleLines.map((i) => (
-                                <p key={i} className="text-lg md:text-xl text-slate-400 leading-relaxed animate-fade-in opacity-0" style={{ animationFillMode: 'forwards' }}>
-                                    {descriptionLines[i]}
-                                </p>
-                            ))}
-                        </div>
-
-                        {visibleLines.length === descriptionLines.length && skillsList.length > 0 && (
-                            <div className="flex flex-wrap gap-3 mt-4 animate-fade-in">
-                                {skillsList.map((skill, index) => (
-                                    <span
-                                        key={index}
-                                        className="px-4 py-2 rounded-full glass text-sm font-medium text-brand-secondary border border-brand-secondary/20 hover:border-brand-secondary/50 transition-colors"
-                                    >
-                                        {skill}
-                                    </span>
-                                ))}
-                            </div>
-                        )}
-                        {visibleLines.length === descriptionLines.length && (
-                            <div className="flex gap-10 mt-2 animate-fade-in">
-                                <div className="flex flex-col">
-                                    <span className="text-4xl font-bold text-gradient tracking-tight">{aboutData.experienceYears || "0"}</span>
-                                    <span className="text-slate-300 text-xs font-bold uppercase tracking-widest mt-1">Years Experience</span>
-                                </div>
-                                <div className="h-12 w-px bg-white/10 hidden sm:block"></div>
-                                <div className="flex flex-col">
-                                    <span className="text-4xl font-bold text-gradient tracking-tight">{aboutData.projectsCount || "0"}</span>
-                                    <span className="text-slate-300 text-xs font-bold uppercase tracking-widest mt-1">Projects Completed</span>
-                                </div>
-                            </div>
-                        )}
+        <section ref={ref} className="relative min-h-screen flex items-center justify-center py-14 px-4 sm:px-6 lg:px-8 overflow-hidden">
+            {/* Animated Gradient Background Orbs */}
+            <div className="absolute top-[10%] -left-32 w-[30rem] h-[30rem] bg-accent/20 rounded-full mix-blend-multiply dark:mix-blend-lighten filter blur-[128px] opacity-70 animate-float" style={{ animationDuration: '8s' }}></div>
+            <div className="absolute bottom-[10%] -right-32 w-[30rem] h-[30rem] bg-accent-2/20 rounded-full mix-blend-multiply dark:mix-blend-lighten filter blur-[128px] opacity-70 animate-float" style={{ animationDelay: '2s', animationDuration: '9s' }}></div>
+            
+            <div className="max-w-7xl mx-auto w-full relative z-10">
+                {loading ? null : !aboutData ? (
+                    <div className="flex justify-center items-center h-64 bg-bg-card rounded-3xl shadow-custom border border-border-color">
+                        <p className="text-text-secondary text-lg">No profile data found. Please set it up in the dashboard.</p>
                     </div>
+                ) : (
+                    <div className="flex flex-col-reverse lg:flex-row items-center justify-between gap-12 lg:gap-24">
+                        {/* Left Content */}
+                        <div className="flex-1 space-y-6 sm:space-y-8 flex flex-col justify-center text-center lg:text-left">
+                            <div className="space-y-3 sm:space-y-4">
+                                <div className="text-lg sm:text-2xl md:text-3xl font-medium text-text-secondary w-full">
+                                    {showIntro && introWords.map((word, i) => (
+                                        <span key={i} className="inline-block animate-fadeInUp" style={{ animationDelay: `${i * 0.15}s` }}>
+                                            {word}&nbsp;
+                                        </span>
+                                    ))}
+                                </div>
 
-                    {/* Right Content - Profile Image */}
-                    <div className="order-1 lg:order-2 flex justify-center lg:justify-end">
-                        <div className="relative group">
-                            {/* Decorative Elements */}
-                            <div className="absolute -inset-4 bg-gradient-to-r from-brand-primary to-brand-secondary rounded-full opacity-20 blur-2xl group-hover:opacity-40 transition-opacity duration-500"></div>
+                                <div className="text-4xl sm:text-7xl lg:text-6xl font-heading font-extrabold tracking-tight w-full flex flex-wrap justify-center lg:justify-start leading-tight">
+                                    {showName && nameLetters.map((letter, i) => (
+                                        <span key={i}
+                                            className="inline-block transition-all duration-500 transform hover:scale-110 pb-1 sm:pb-2"
+                                            style={{
+                                                transitionDelay: `${i * 50}ms`,
+                                                opacity: showName ? 1 : 0,
+                                                transform: showName ? 'translateY(0)' : 'translateY(24px)'
+                                            }}
+                                        >
+                                            <span className={letter.trim() === '' ? '' : 'bg-clip-text text-transparent bg-gradient-to-r from-accent to-accent-2'}>
+                                                {letter === ' ' ? '\u00A0' : letter}
+                                            </span>
+                                        </span>
+                                    ))}
+                                </div>
+                            </div>
 
-                            <div className="relative w-64 h-64 md:w-80 md:h-80 rounded-full p-2 bg-gradient-to-tr from-brand-primary via-slate-800 to-brand-secondary shadow-2xl">
-                                <div className="w-full h-full rounded-full overflow-hidden border-4 border-bg-dark bg-slate-800">
-                                    {profileImage && (
+                            <div className="space-y-4 max-w-2xl text-base sm:text-xl text-text-secondary leading-relaxed mx-auto lg:mx-0">
+                                {descriptionLines.map((line, i) => (
+                                    <p key={i} className={`transition-all duration-700 transform ${visibleLines.includes(i) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+                                        {line}
+                                    </p>
+                                ))}
+                            </div>
+
+                            <div className="pt-4 max-w-2xl mx-auto lg:mx-0 w-full">
+                                {skillsList.length > 0 && (
+                                    <div className="flex flex-wrap justify-center lg:justify-start gap-2 sm:gap-3 mb-8 sm:mb-10">
+                                        {skillsList.map((skill, index) => (
+                                            <span
+                                                key={index}
+                                                className={`px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl text-xs sm:text-sm font-medium bg-bg-card border border-border-color shadow-sm hover:shadow-custom hover:-translate-y-1 hover:border-accent/40 transition-all duration-300 animate-float`}
+                                                style={{ animationDelay: `${index * 0.2}s`, opacity: visibleLines.length === descriptionLines.length ? 1 : 0, transitionDuration: '1s' }}
+                                            >
+                                                {skill}
+                                            </span>
+                                        ))}
+                                    </div>
+                                )}
+                                
+                                <div className={`flex items-center justify-center lg:justify-start gap-6 sm:gap-8 lg:gap-16 transition-all duration-1000 ${visibleLines.length === descriptionLines.length ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+                                    <div className="flex items-center gap-3 sm:gap-4">
+                                        <div className="text-3xl sm:text-4xl md:text-5xl font-heading font-bold text-text-primary">
+                                            {aboutData.experienceYears || "0"}
+                                            <span className="text-accent">+</span>
+                                        </div>
+                                        <span className="text-[10px] sm:text-sm md:text-base text-text-secondary uppercase tracking-wider font-medium max-w-[60px] sm:max-w-[80px]">Years of Craft</span>
+                                    </div>
+                                    <div className="w-[1px] h-10 sm:h-12 bg-border-color"></div>
+                                    <div className="flex items-center gap-3 sm:gap-4">
+                                        <div className="text-3xl sm:text-4xl md:text-5xl font-heading font-bold text-text-primary">
+                                            {aboutData.projectsCount || "0"}
+                                            <span className="text-accent-2">+</span>
+                                        </div>
+                                        <span className="text-[10px] sm:text-sm md:text-base text-text-secondary uppercase tracking-wider font-medium max-w-[60px] sm:max-w-[80px]">Work Delivered</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Right Content - Profile Image */}
+                        <div className="flex-1 w-full flex justify-center items-center lg:justify-end relative group">
+                            <div className="relative w-56 h-56 xs:w-64 xs:h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96 w-full max-w-sm shrink-0">
+                                {/* Decorative Background Glows */}
+                                <div className="absolute inset-0 bg-gradient-to-tr from-accent to-accent-2 rounded-[2rem] md:rounded-[3rem] rotate-6 opacity-20 blur-xl group-hover:rotate-12 group-hover:scale-105 transition-all duration-700 ease-out"></div>
+                                <div className="absolute inset-0 bg-gradient-to-tr from-accent to-accent-2 rounded-[2rem] md:rounded-[3rem] -rotate-3 opacity-20 blur-xl group-hover:-rotate-6 group-hover:scale-105 transition-all duration-700 ease-out delay-75"></div>
+
+                                <div className="relative h-full w-full rounded-[2rem] md:rounded-[3rem] border border-white/20 dark:border-white/10 shadow-2xl overflow-hidden bg-bg-card flex items-center justify-center transform group-hover:-translate-y-2 group-hover:scale-[1.02] transition-all duration-500">
+                                    {profileImage ? (
                                         <img
                                             src={profileImage}
                                             alt="profile"
-                                            className={`w-full h-full object-cover transition-all duration-1000 ${profileLoaded ? "scale-100 opacity-100" : "scale-110 opacity-0"}`}
+                                            className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
                                         />
+                                    ) : (
+                                        <div className="font-heading font-medium text-text-secondary">
+                                            <span>Image Needed</span>
+                                        </div>
                                     )}
+                                    {/* Overlay Gradient */}
+                                    <div className="absolute inset-0 bg-gradient-to-t from-bg-card/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                                 </div>
                             </div>
-
-                            {/* Stats or Floating Badges could go here */}
                         </div>
                     </div>
-                </div>
-            )}
+                )}
+            </div>
         </section>
     );
 });
 
 About.displayName = "About";
 export default About;
-

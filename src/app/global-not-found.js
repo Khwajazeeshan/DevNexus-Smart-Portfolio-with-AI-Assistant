@@ -8,10 +8,10 @@ export const metadata = {
 
 export default function GlobalNotFound() {
     return (
-        <html lang="en" className={inter.className}>
+        <html lang="en" >
             <body>
-                <h1 style={{ color: 'red', textAlign: 'center' }}>404 - Page Not Found</h1>
-                <p style={{ color: 'red', textAlign: 'center' }}>This page does not exist.</p>
+                <h1 >404 - Page Not Found</h1>
+                <p >This page does not exist.</p>
             </body>
         </html>
     )

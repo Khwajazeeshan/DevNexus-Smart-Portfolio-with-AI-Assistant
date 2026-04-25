@@ -6,8 +6,9 @@ import Footer from "./Home/Layouts/Footer/page";
 import LoadingScreen from "./Home/Layouts/LoadingScreen/page";
 
 export default function Home() {
-  const [loading, setLoading] = useState(true);
-  const [contentReady, setContentReady] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isHomeReady, setIsHomeReady] = useState(false);
+
   const sections = {
     about: useRef<HTMLDivElement>(null),
     resume: useRef<HTMLDivElement>(null),
@@ -18,12 +19,18 @@ export default function Home() {
 
   return (
     <>
-      {/* @ts-ignore */}
-      {loading && <LoadingScreen isReady={contentReady} onComplete={() => setLoading(false)} />}
-      <div className={`transition-opacity duration-1000 ${loading ? 'opacity-0 h-0 overflow-hidden' : 'opacity-100'}`}>
+      {isLoading && (
+        <LoadingScreen 
+          isReady={isHomeReady} 
+          onComplete={() => setIsLoading(false)} 
+        />
+      )}
+      <div 
+        className={`transition-opacity duration-500 ${isLoading ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
+      >
         <Navbar sections={sections} />
         {/* @ts-ignore */}
-        <HomeComponent sections={sections} onReady={() => setContentReady(true)} />
+        <HomeComponent sections={sections} onReady={() => setIsHomeReady(true)} />
         <Footer />
       </div>
     </>

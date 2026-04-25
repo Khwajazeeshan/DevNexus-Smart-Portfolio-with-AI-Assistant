@@ -17,8 +17,8 @@ export default function Home({ sections, onReady }) {
   };
 
   return (
-    <main className="flex flex-col items-center bg-bg-dark min-h-screen">
-      <div className="w-full max-w-7xl mx-auto flex flex-col gap-0 md:gap-8">
+    <main >
+      <div >
         {visibleSections.includes("About") && (
           <About ref={sections.about} onComplete={() => showNextSection("Resume")} onReady={onReady} />
         )}
@@ -34,7 +34,7 @@ export default function Home({ sections, onReady }) {
       </div>
 
       {/* Chatbot */}
-      <div className="fixed bottom-6 right-6 z-[60]">
+      <div >
         <Chatbot open={isChatOpen} onToggle={toggleChat} />
       </div>
     </main>

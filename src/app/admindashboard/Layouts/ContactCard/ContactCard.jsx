@@ -68,31 +68,31 @@ export default function ContactCard() {
     };
 
     return (
-        <div className="min-h-screen bg-[#020617] text-slate-200 px-4 py-8 md:p-8">
+        <div >
             <Toaster position="top-right" />
 
-            <div className="max-w-4xl mx-auto">
-                <header className="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-6">
+            <div >
+                <header >
                     <div>
-                        <Link href="/admindashboard" className="flex items-center gap-2 text-slate-400 hover:text-white transition-colors mb-4 group w-fit">
-                            <FaArrowLeft className="group-hover:-translate-x-1 transition-transform" />
+                        <Link href="/admindashboard" >
+                            <FaArrowLeft  />
                             <span>Back to Dashboard</span>
                         </Link>
-                        <h1 className="text-3xl md:text-4xl font-bold text-white tracking-tight">Contact Portal</h1>
-                        <p className="text-slate-400 text-sm mt-1 font-medium italic opacity-80">Manage how the world reaches out to you.</p>
+                        <h1 >Contact Portal</h1>
+                        <p >Manage how the world reaches out to you.</p>
                     </div>
                 </header>
 
-                <form onSubmit={handleContactSubmit} className="space-y-8 bg-slate-900/50 border border-white/5 p-6 md:p-10 rounded-[2.5rem] shadow-2xl backdrop-blur-xl">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <form onSubmit={handleContactSubmit} >
+                    <div >
                         {/* Address */}
-                        <div className="space-y-4">
-                            <label className="flex items-center gap-2 text-sm font-bold text-slate-400 uppercase tracking-widest">
-                                <FaMapMarkerAlt className="text-brand-primary" /> Office Address
+                        <div >
+                            <label >
+                                <FaMapMarkerAlt  /> Office Address
                             </label>
                             <input
                                 type="text"
-                                className="w-full bg-slate-800 border border-white/5 rounded-2xl py-4 px-6 text-white focus:outline-none focus:border-brand-primary/50 transition-all font-medium"
+                                
                                 placeholder="e.g. 123 Street, City, Country"
                                 value={address}
                                 onChange={(e) => setAddress(e.target.value)}
@@ -100,13 +100,13 @@ export default function ContactCard() {
                         </div>
 
                         {/* Map Link */}
-                        <div className="space-y-4">
-                            <label className="flex items-center gap-2 text-sm font-bold text-slate-400 uppercase tracking-widest">
-                                <FaMapMarkerAlt className="text-brand-primary" /> Map URL (Embed or Link)
+                        <div >
+                            <label >
+                                <FaMapMarkerAlt  /> Map URL (Embed or Link)
                             </label>
                             <input
                                 type="text"
-                                className="w-full bg-slate-800 border border-white/5 rounded-2xl py-4 px-6 text-white focus:outline-none focus:border-brand-primary/50 transition-all font-medium"
+                                
                                 placeholder="Google Maps URL"
                                 value={mapLink}
                                 onChange={(e) => setMapLink(e.target.value)}
@@ -114,13 +114,13 @@ export default function ContactCard() {
                         </div>
 
                         {/* Email */}
-                        <div className="space-y-4">
-                            <label className="flex items-center gap-2 text-sm font-bold text-slate-400 uppercase tracking-widest">
-                                <FaEnvelope className="text-brand-primary" /> Public Email
+                        <div >
+                            <label >
+                                <FaEnvelope  /> Public Email
                             </label>
                             <input
                                 type="email"
-                                className="w-full bg-slate-800 border border-white/5 rounded-2xl py-4 px-6 text-white focus:outline-none focus:border-brand-primary/50 transition-all font-medium"
+                                
                                 placeholder="hello@portfolio.com"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
@@ -128,13 +128,13 @@ export default function ContactCard() {
                         </div>
 
                         {/* Phone */}
-                        <div className="space-y-4">
-                            <label className="flex items-center gap-2 text-sm font-bold text-slate-400 uppercase tracking-widest">
-                                <FaPhone className="text-brand-primary" /> Business Phone
+                        <div >
+                            <label >
+                                <FaPhone  /> Business Phone
                             </label>
                             <input
                                 type="text"
-                                className="w-full bg-slate-800 border border-white/5 rounded-2xl py-4 px-6 text-white focus:outline-none focus:border-brand-primary/50 transition-all font-medium"
+                                
                                 placeholder="+92 3XX XXXXXXX"
                                 value={phone}
                                 onChange={(e) => setPhone(e.target.value)}
@@ -142,13 +142,13 @@ export default function ContactCard() {
                         </div>
                     </div>
 
-                    <div className="pt-6 flex justify-center md:justify-end">
+                    <div >
                         <button
                             type="submit"
                             disabled={isSaving}
-                            className="w-full md:w-auto px-12 py-5 bg-brand-primary hover:bg-violet-600 text-white font-black rounded-2xl transition-all shadow-xl shadow-brand-primary/20 flex items-center justify-center gap-3 active:scale-[0.98] disabled:opacity-50"
+                            
                         >
-                            <FaSave className={isSaving ? "animate-pulse" : ""} /> {isSaving ? "Synchronizing..." : "Update Contact Info"}
+                            <FaSave  /> {isSaving ? "Synchronizing..." : "Update Contact Info"}
                         </button>
                     </div>
                 </form>

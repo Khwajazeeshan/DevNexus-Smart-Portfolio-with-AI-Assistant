@@ -31,78 +31,101 @@ const Contact = forwardRef(({ onComplete }, ref) => {
     const phone = contact?.phone || "+92 345 6789101";
 
     return (
-        <section ref={ref} className="py-10 px-6 max-w-6xl mx-auto w-full">
-            <div className="text-center mb-16">
-                <h2 className="text-3xl md:text-5xl font-bold mb-4">Get In <span className="text-gradient">Touch</span></h2>
-                <div className="w-20 h-1.5 bg-brand-primary mx-auto rounded-full"></div>
-                <p className="mt-6 text-slate-400">Have a project in mind or just want to say hi? Feel free to reach out!</p>
+        <section ref={ref} className="relative py-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto z-10 w-full overflow-hidden">
+            <div className="absolute right-[10%] bottom-0 w-[40rem] h-[40rem] bg-accent/5 rounded-full blur-[120px] -z-10 animate-pulse" />
+
+            <div className="text-center mb-12 sm:mb-16 animate-fadeInUp">
+                <h2 className="text-3xl sm:text-4xl md:text-5xl font-heading font-extrabold text-text-primary tracking-tight mb-4 sm:mb-6">
+                    Let's <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-accent-2">Connect</span>
+                </h2>
+                <p className="text-base sm:text-lg text-text-secondary max-w-2xl mx-auto font-medium px-4">
+                    "Ready to build the future? I'm just a message away."
+                </p>
+                <div className="flex justify-center items-center gap-2 mt-6 sm:mt-8">
+                    <span className="w-8 sm:w-12 h-1 bg-gradient-to-r from-transparent to-accent rounded-full"></span>
+                    <span className="w-2.5 sm:w-3 h-2.5 sm:h-3 bg-accent rounded-full animate-glowPulse"></span>
+                    <span className="w-8 sm:w-12 h-1 bg-gradient-to-l from-transparent to-accent rounded-full"></span>
+                </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                {/* Email Card */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 mb-12 sm:mb-16">
                 <ContactCard 
                     icon={<FaEnvelope size={24} />}
                     title="Email Me"
                     value={email}
                     link={`mailto:${email}`}
-                    color="text-brand-primary"
+                    delay="0s"
                 />
-
-                {/* WhatsApp Card */}
                 <ContactCard 
                     icon={<FaWhatsapp size={24} />}
                     title="WhatsApp"
                     value={phone}
                     link={`https://wa.me/${phone.replace(/[^0-9]/g, '')}`}
-                    color="text-green-400"
+                    delay="1s"
                 />
-
-                {/* Location Card */}
                 <ContactCard 
                     icon={<FaMapMarkerAlt size={24} />}
                     title="Location"
                     value={address}
                     link={mapLink}
-                    color="text-brand-secondary"
-                    isAddress={true}
+                    delay="2s"
                 />
             </div>
 
-            {/* Subtle Contact Form CTA or additional info could go here */}
-            <div className="mt-16 text-center">
-                <div className="inline-block glass px-8 py-10 rounded-3xl border border-white/5 max-w-2xl">
-                    <h3 className="text-xl font-bold mb-4 text-slate-200">Current Availability</h3>
-                    <p className="text-slate-400">I am currently open to freelance opportunities and new full-time positions as a Full Stack Developer.</p>
+            <div className="animate-fadeInUp relative group">
+                <div className="absolute -inset-1 bg-gradient-to-r from-accent to-accent-2 rounded-3xl blur opacity-20 group-hover:opacity-40 transition duration-1000 group-hover:duration-200"></div>
+                <div className="relative flex flex-col md:flex-row items-center justify-between gap-6 sm:gap-8 p-6 sm:p-8 md:p-12 bg-bg-card border border-border-color rounded-[2rem] shadow-sm group-hover:shadow-custom overflow-hidden">
+                    <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-accent/5 to-transparent z-0"></div>
+                    
+                    <div className="relative z-10 flex-1 text-center md:text-left">
+                        <div className="flex items-center justify-center md:justify-start gap-3 mb-4">
+                            <span className="relative flex h-2.5 sm:h-3 w-2.5 sm:w-3">
+                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75"></span>
+                                <span className="relative inline-flex rounded-full h-2.5 sm:h-3 w-2.5 sm:w-3 bg-accent-2"></span>
+                            </span>
+                            <span className="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-text-secondary">Status</span>
+                        </div>
+                        <h3 className="text-2xl sm:text-3xl lg:text-4xl font-heading font-extrabold text-text-primary mb-3">Current Availability</h3>
+                        <p className="text-sm sm:text-lg text-text-secondary leading-relaxed max-w-xl mx-auto md:mx-0">
+                            I am currently open to <span className="text-text-primary font-bold">freelance projects</span> and <span className="text-text-primary font-bold">full-time roles</span> as an Elite Developer.
+                        </p>
+                    </div>
                 </div>
             </div>
         </section>
     );
 });
 
-const ContactCard = ({ icon, title, value, link, color, isAddress = false }) => (
+const ContactCard = ({ icon, title, value, link, delay = "0s" }) => (
     <a 
         href={link} 
         target="_blank" 
         rel="noopener noreferrer" 
-        className="group glass p-8 rounded-3xl border border-white/5 hover:border-white/10 transition-all duration-300 flex flex-col items-center text-center"
+        className="group relative rounded-3xl bg-bg-card border border-border-color shadow-sm hover:shadow-custom hover:-translate-y-2 transition-all duration-500 ease-out p-8 h-full flex flex-col items-center text-center overflow-hidden"
     >
-        <div className={`p-4 rounded-2xl bg-white/5 ${color} group-hover:scale-110 transition-all duration-300 mb-6 shadow-xl relative overflow-hidden`}>
-            {/* Pulsing Aura/Blink Effect */}
-            <div className={`absolute inset-0 bg-current opacity-10 animate-pulse`}></div>
-            <div className="relative z-10">
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0"></div>
+        
+        <div 
+            className="relative z-10 w-16 h-16 mb-6 rounded-2xl bg-bg-primary text-accent border border-border-color/50 flex items-center justify-center transform group-hover:scale-110 group-hover:bg-accent group-hover:text-white transition-all duration-500 shadow-sm"
+        >
+            <span className="flex items-center justify-center animate-blueBlink" style={{ animationDelay: delay }}>
                 {icon}
-            </div>
+            </span>
         </div>
-        <h4 className="text-sm font-bold uppercase tracking-widest text-slate-500 mb-2">{title}</h4>
-        <p className={`text-lg font-semibold text-slate-200 group-hover:text-white transition-colors line-clamp-2 ${isAddress ? "max-w-[200px]" : ""}`}>
+        
+        <h4 className="relative z-10 text-xl font-heading font-bold text-text-primary mb-2 group-hover:text-accent transition-colors duration-300">
+            {title}
+        </h4>
+        
+        <p className="relative z-10 text-text-secondary mb-8 break-all max-w-[200px] line-clamp-2">
             {value}
         </p>
-        <div className="mt-6 flex items-center gap-2 text-sm font-medium text-brand-primary opacity-0 group-hover:opacity-100 transition-all transform translate-y-2 group-hover:translate-y-0">
-            Connect <FaExternalLinkAlt size={12} />
+
+        <div className="relative z-10 mt-auto flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-accent border-b border-transparent group-hover:border-accent pb-1 transition-all">
+            Connect Now <FaExternalLinkAlt size={12} className="transform group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
         </div>
     </a>
 )
 
 Contact.displayName = "Contact";
 export default Contact;
-

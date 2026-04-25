@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
+import { FaMicrophone, FaStop } from "react-icons/fa";
 
 const VoiceChatButton = ({ setInputValue }) => {
     const [listening, setListening] = useState(false);
@@ -6,6 +7,7 @@ const VoiceChatButton = ({ setInputValue }) => {
 
     // Initialize speech recognition
     useEffect(() => {
+        if (typeof window === "undefined") return;
         if (!("webkitSpeechRecognition" in window || "SpeechRecognition" in window)) return;
 
         const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -24,7 +26,7 @@ const VoiceChatButton = ({ setInputValue }) => {
         recognitionRef.current.onend = () => setTimeout(() => setListening(false), 100);
 
         return () => recognitionRef.current?.abort();
-    }, []);
+    }, [setInputValue]);
 
     const handleVoiceClick = () => {
         if (!recognitionRef.current) return;
@@ -34,28 +36,21 @@ const VoiceChatButton = ({ setInputValue }) => {
     return (
         <button
             onClick={handleVoiceClick}
-            className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 ${
+            className={`p-2 rounded-full transition-all duration-300 flex items-center justify-center ${
                 listening 
-                ? "bg-brand-secondary text-white scale-110 shadow-lg shadow-brand-secondary/40" 
-                : "text-slate-400 hover:text-white"
+                ? "bg-red-500 text-white animate-pulse shadow-[0_0_15px_rgba(239,68,68,0.5)]" 
+                : "text-text-secondary hover:text-accent hover:bg-bg-primary/50"
             }`}
-            title={listening ? "Stop voice chat" : "Start voice chat"}
+            title={listening ? "Stop Listening" : "Start Voice Typing"}
+            type="button"
         >
             {listening ? (
-                <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                <FaStop size={14} />
             ) : (
-                <svg
-                    width="20"
-                    height="20"
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
-                >
-                    <path d="M12 15a3 3 0 0 0 3-3V6a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3zm5-3a1 1 0 1 1 2 0 7 7 0 0 1-6 6.92V21a1 1 0 1 1-2 0v-2.08A7 7 0 0 1 5 12a1 1 0 1 1 2 0 5 5 0 0 0 10 0z" />
-                </svg>
+                <FaMicrophone size={18} />
             )}
         </button>
     );
 };
 
 export default VoiceChatButton;
-

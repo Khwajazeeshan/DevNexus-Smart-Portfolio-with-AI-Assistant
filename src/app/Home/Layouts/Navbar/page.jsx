@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { IoMdDownload } from "react-icons/io";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 export default function Navbar({ sections }) {
     const [menuOpen, setMenuOpen] = useState(false);
@@ -50,7 +51,7 @@ export default function Navbar({ sections }) {
     }, []);
 
     const scrollToSection = (ref) => {
-        if (ref.current) {
+        if (ref && ref.current) {
             const offset = 80;
             const top = ref.current.offsetTop - offset;
             window.scrollTo({ top, behavior: "smooth" });
@@ -58,18 +59,10 @@ export default function Navbar({ sections }) {
         }
     };
 
-    const profileImage = profileData?.imagePath
-        ? `${profileData.imagePath}`
-        : `https://ui-avatars.com/api/?name=${encodeURIComponent(profileData?.name || "User")}&background=random`;
-
-    const profileName = profileData?.name || "Dev";
-
     const handleDownloadResume = (e) => {
         if (e) e.preventDefault();
         if (!resumeUrl) return;
 
-        // Use the download API route to proxy the file download from Cloudinary
-        // This avoids cross-origin security errors in the browser and enforces a correct filename
         const link = document.createElement("a");
         link.href = "/api/resume/download";
         link.download = "Resume.pdf";
@@ -81,72 +74,74 @@ export default function Navbar({ sections }) {
     };
 
     return (
-        <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 py-5 bg-bg-dark/90 backdrop-blur-xl shadow-lg border-b border-white/5`}>
-            <div className="container mx-auto px-6 flex justify-between items-center">
-                {/* Logo/Brand */}
-                <div className="flex items-center gap-3 cursor-pointer group" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
-                    <div className="relative w-10 h-10 rounded-full overflow-hidden border-2 border-brand-primary group-hover:scale-110 transition-transform duration-300">
-                        <img
-                            src={profileImage}
-                            alt="Profile"
-                            className="w-full h-full object-cover"
-                            onError={(e) => {
-                                e.target.src = "https://ui-avatars.com/api/?name=User&background=random";
-                            }}
-                        />
+        <nav className={`sticky top-0 z-50 backdrop-blur-md bg-white/70 dark:bg-[#0A0F1E]/70 border-b border-border-color transition-all duration-300 ${scrolled ? 'shadow-custom' : ''}`}>
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="flex items-center justify-between h-20">
+                    {/* Left: Logo/Brand */}
+                    <div className="flex-shrink-0 cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
+                        <div className="flex items-center gap-3 group">
+                            <img
+                                src="/logo-1.png"
+                                alt="Khawaja Zeeshan Logo"
+                                className="h-12 w-auto object-contain group-hover:scale-105 transition-transform duration-300"
+                            />
+                        </div>
                     </div>
-                    <span className="text-xl font-bold tracking-tight text-gradient hidden sm:block">
-                        {profileName}
-                    </span>
+
+                    {/* Right: Desktop Links / Mobile Toggle */}
+                    <div className="flex items-center gap-4">
+                        {/* Desktop Links */}
+                        <div className="hidden md:block">
+                            <ul className="flex items-center space-x-8">
+                                {["About", "Resume", "Projects", "Contact"].map((item) => (
+                                    <li
+                                        key={item}
+                                        onClick={() => scrollToSection(sections[item.toLowerCase()])}
+                                        className="text-text-secondary hover:text-accent font-medium cursor-pointer transition-colors duration-300 relative group"
+                                    >
+                                        {item}
+                                        <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full rounded-full"></span>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                        
+                        <div className="hidden md:flex items-center gap-4 ml-4">
+                            {resumeUrl && (
+                                <button
+                                    onClick={handleDownloadResume}
+                                    className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-bg-card border border-border-color shadow-sm hover:shadow-custom hover:-translate-y-1 transition-all duration-300 text-text-primary font-medium"
+                                >
+                                    Resume <IoMdDownload />
+                                </button>
+                            )}
+                            <ThemeToggle />
+                        </div>
+
+                        {/* Mobile Menu Button */}
+                        <div className="flex md:hidden items-center gap-3">
+                            <ThemeToggle />
+                            <button className="text-text-secondary hover:text-accent p-2 rounded-xl bg-bg-card border border-border-color shadow-sm transition-all duration-300" onClick={toggleMenu}>
+                                {menuOpen ? <FaTimes size={20} /> : <FaBars size={20} />}
+                            </button>
+                        </div>
+                    </div>
                 </div>
-
-                {/* Desktop Links */}
-                <div className="hidden md:flex items-center gap-8">
-                    <ul className="flex items-center gap-8 text-sm font-medium text-slate-300">
-                        {["About", "Resume", "Projects", "Contact"].map((item) => (
-                            <li
-                                key={item}
-                                onClick={() => scrollToSection(sections[item.toLowerCase()])}
-                                className="cursor-pointer hover:text-brand-primary transition-colors duration-200 relative group"
-                            >
-                                {item}
-                                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-brand-primary transition-all duration-300 group-hover:w-full"></span>
-                            </li>
-                        ))}
-                    </ul>
-
-                    {resumeUrl && (
-                        <button
-                            onClick={handleDownloadResume}
-                            className="px-5 py-2.5 rounded-full bg-brand-primary/10 border border-brand-primary/30 text-brand-primary font-semibold text-sm hover:bg-brand-primary hover:text-white transition-all duration-300 shadow-sm hover:shadow-brand-primary/20 flex items-center gap-2 whitespace-nowrap"
-                        >
-                            Resume <IoMdDownload className="text-lg" />
-                        </button>
-                    )}
-                </div>
-
-                {/* Mobile Toggle */}
-                <button className="md:hidden text-slate-300 hover:text-white transition-colors" onClick={toggleMenu}>
-                    {menuOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
-                </button>
             </div>
 
             {/* Mobile Dropdown Menu */}
             <div 
-                className={`absolute top-full left-0 right-0 md:hidden bg-bg-dark/95 backdrop-blur-2xl border-t border-white/5 transition-all duration-900 ease-in-out origin-top overflow-hidden h-[40vh] ${
-                    menuOpen ? "scale-y-100 opacity-100 visible" : "scale-y-0 opacity-0 invisible"
-                }`}
+                className={`md:hidden overflow-hidden transition-all duration-500 ease-in-out bg-bg-card/95 backdrop-blur-xl border-b border-border-color ${menuOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"}`}
             >
-                <div className="flex flex-col items-center justify-center h-full gap-8 py-8">
-                    <div className="flex flex-col items-center gap-6">
+                <div className="px-4 py-6 space-y-4 shadow-custom">
+                    <div className="flex flex-col space-y-3">
                         {["About", "Resume", "Projects", "Contact"].map((item) => (
                             <button
                                 key={item}
                                 onClick={() => scrollToSection(sections[item.toLowerCase()])}
-                                className="text-2xl font-semibold text-slate-200 hover:text-brand-primary transition-all duration-300 relative group"
+                                className="text-left w-full px-4 py-3 text-text-secondary hover:text-accent hover:bg-bg-primary rounded-xl transition-all duration-300 font-medium"
                             >
                                 {item}
-                                <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-brand-primary transition-all duration-300 group-hover:w-full rounded-full"></span>
                             </button>
                         ))}
                     </div>
@@ -154,9 +149,9 @@ export default function Navbar({ sections }) {
                     {resumeUrl && (
                         <button
                             onClick={handleDownloadResume}
-                            className="px-6 py-3 rounded-full bg-brand-primary text-white font-bold text-base hover:scale-105 transition-transform flex items-center gap-2 shadow-lg shadow-brand-primary/20"
+                            className="w-full flex justify-center items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-accent to-accent-2 text-white shadow-custom hover:opacity-90 font-medium transition-all duration-300"
                         >
-                            Resume <IoMdDownload className="text-lg" />
+                            Resume <IoMdDownload />
                         </button>
                     )}
                 </div>
@@ -164,6 +159,4 @@ export default function Navbar({ sections }) {
         </nav>
     );
 }
-
-
 

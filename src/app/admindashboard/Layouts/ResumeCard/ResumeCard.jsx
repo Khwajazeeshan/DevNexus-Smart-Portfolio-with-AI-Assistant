@@ -182,25 +182,25 @@ const ResumeCard = () => {
     };
 
     return (
-        <div className="min-h-screen bg-[#020617] text-slate-200 px-4 py-8 md:p-8">
+        <div >
             <Toaster position="top-right" />
             
-            <div className="max-w-5xl mx-auto">
-                <header className="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-6">
+            <div >
+                <header >
                     <div>
-                        <Link href="/admindashboard" className="flex items-center gap-2 text-slate-400 hover:text-white transition-colors mb-4 group w-fit">
-                            <FaArrowLeft className="group-hover:-translate-x-1 transition-transform" />
+                        <Link href="/admindashboard" >
+                            <FaArrowLeft  />
                             <span>Back to Dashboard</span>
                         </Link>
-                        <h1 className="text-3xl md:text-4xl font-bold text-white tracking-tight">Resume Manager</h1>
-                        <p className="text-slate-400 text-sm mt-1 font-medium italic opacity-80">Design your career path and technical expertise.</p>
+                        <h1 >Resume Manager</h1>
+                        <p >Design your career path and technical expertise.</p>
                     </div>
                 </header>
 
-                <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+                <div >
                     {/* Sidebar Tabs */}
-                    <div className="lg:col-span-1 flex lg:flex-col gap-2 overflow-x-auto pb-4 lg:pb-0 scrollbar-hide no-scrollbar">
-                        <div className="flex lg:flex-col gap-2 min-w-max lg:min-w-0 w-full">
+                    <div >
+                        <div >
                             <TabButton 
                                 active={activeSection === "education"} 
                                 onClick={() => setActiveSection("education")}
@@ -223,26 +223,26 @@ const ResumeCard = () => {
                     </div>
 
                     {/* Content Area */}
-                    <div className="lg:col-span-3 space-y-8 bg-slate-900/50 border border-white/5 p-6 md:p-10 rounded-[2.5rem] shadow-2xl backdrop-blur-xl">
+                    <div >
                         {activeSection === "education" && (
-                            <section className="animate-fade-in space-y-6">
-                                <h2 className="text-xl font-bold text-white flex items-center gap-3">
-                                    <FaGraduationCap className="text-brand-primary" /> Manage Education
+                            <section >
+                                <h2 >
+                                    <FaGraduationCap  /> Manage Education
                                 </h2>
-                                <div className="flex flex-col sm:flex-row gap-4">
+                                <div >
                                     <input 
                                         type="text" 
                                         placeholder="Enter Education (e.g. BS in CS - University, 2021)"
-                                        className="w-full sm:flex-1 bg-slate-800 border border-white/5 rounded-2xl py-4 px-6 text-white focus:outline-none focus:border-brand-primary/50 transition-all font-medium"
+                                        
                                         value={educationInput}
                                         onChange={(e) => setEducationInput(e.target.value)}
                                         onKeyDown={(e) => e.key === "Enter" && handleEducationSubmit()}
                                     />
-                                    <button onClick={handleEducationSubmit} className="w-full sm:w-auto px-8 py-4 sm:py-0 rounded-2xl bg-brand-primary text-white hover:bg-violet-600 transition-all flex items-center justify-center gap-2 font-black shadow-xl shadow-brand-primary/20 active:scale-[0.98]">
+                                    <button onClick={handleEducationSubmit} >
                                         <FaPlus /> Add Item
                                     </button>
                                 </div>
-                                <div className="space-y-4 pt-4 border-t border-white/5">
+                                <div >
                                     {educationList.length > 0 ? educationList.map((item, index) => (
                                         <div 
                                             key={item._id} 
@@ -251,37 +251,37 @@ const ResumeCard = () => {
                                             onDragEnter={(e) => handleDragEnter(e, index, "education")}
                                             onDragEnd={handleDragEnd}
                                             onDragOver={(e) => e.preventDefault()}
-                                            className={`flex justify-between items-center p-4 bg-slate-800/50 rounded-2xl group hover:bg-slate-800 transition-all cursor-move border border-transparent hover:border-white/10 ${draggingIndex === index && draggingSection === "education" ? "opacity-50 ring-2 ring-brand-primary" : ""}`}
+                                            
                                         >
-                                            <span className="text-slate-300">{item.education}</span>
-                                            <button onClick={() => handleDeleteEducation(item._id)} className="p-2 text-slate-500 hover:text-red-400 transition-colors">
+                                            <span >{item.education}</span>
+                                            <button onClick={() => handleDeleteEducation(item._id)} >
                                                 <FaTrash />
                                             </button>
                                         </div>
-                                    )) : <p className="text-slate-500 text-center py-8 italic">No education entries found.</p>}
+                                    )) : <p >No education entries found.</p>}
                                 </div>
                             </section>
                         )}
 
                         {activeSection === "experience" && (
-                            <section className="animate-fade-in space-y-6">
-                                <h2 className="text-xl font-bold text-white flex items-center gap-3">
-                                    <FaBriefcase className="text-brand-primary" /> Manage Experience
+                            <section >
+                                <h2 >
+                                    <FaBriefcase  /> Manage Experience
                                 </h2>
-                                <div className="flex flex-col sm:flex-row gap-4">
+                                <div >
                                     <input 
                                         type="text" 
                                         placeholder="Enter Experience (e.g. Developer - Corp, 2022-Present)"
-                                        className="w-full sm:flex-1 bg-slate-800 border border-white/5 rounded-2xl py-4 px-6 text-white focus:outline-none focus:border-brand-primary/50 transition-all font-medium"
+                                        
                                         value={experienceInput}
                                         onChange={(e) => setExperienceInput(e.target.value)}
                                         onKeyDown={(e) => e.key === "Enter" && handleExperienceSubmit()}
                                     />
-                                    <button onClick={handleExperienceSubmit} className="w-full sm:w-auto px-8 py-4 sm:py-0 rounded-2xl bg-brand-primary text-white hover:bg-violet-600 transition-all flex items-center justify-center gap-2 font-black shadow-xl shadow-brand-primary/20 active:scale-[0.98]">
+                                    <button onClick={handleExperienceSubmit} >
                                         <FaPlus /> Add Item
                                     </button>
                                 </div>
-                                <div className="space-y-4 pt-4 border-t border-white/5">
+                                <div >
                                     {experienceList.length > 0 ? experienceList.map((item, index) => (
                                         <div 
                                             key={item._id} 
@@ -290,43 +290,43 @@ const ResumeCard = () => {
                                             onDragEnter={(e) => handleDragEnter(e, index, "experience")}
                                             onDragEnd={handleDragEnd}
                                             onDragOver={(e) => e.preventDefault()}
-                                            className={`flex justify-between items-center p-4 bg-slate-800/50 rounded-2xl group hover:bg-slate-800 transition-all cursor-move border border-transparent hover:border-white/10 ${draggingIndex === index && draggingSection === "experience" ? "opacity-50 ring-2 ring-brand-primary" : ""}`}
+                                            
                                         >
-                                            <span className="text-slate-300">{item.experience}</span>
-                                            <button onClick={() => handleDeleteExperience(item._id)} className="p-2 text-slate-500 hover:text-red-400 transition-colors">
+                                            <span >{item.experience}</span>
+                                            <button onClick={() => handleDeleteExperience(item._id)} >
                                                 <FaTrash />
                                             </button>
                                         </div>
-                                    )) : <p className="text-slate-500 text-center py-8 italic">No experience entries found.</p>}
+                                    )) : <p >No experience entries found.</p>}
                                 </div>
                             </section>
                         )}
 
                         {activeSection === "skills" && (
-                            <section className="animate-fade-in space-y-6">
-                                <h2 className="text-xl font-bold text-white flex items-center gap-3">
-                                    <FaCode className="text-brand-primary" /> Manage Skills
+                            <section >
+                                <h2 >
+                                    <FaCode  /> Manage Skills
                                 </h2>
-                                <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
+                                <div >
                                     <input 
                                         type="text" 
                                         placeholder="Skill Name (e.g. React)"
-                                        className="md:col-span-3 bg-slate-800 border border-white/5 rounded-2xl py-4 px-6 text-white focus:outline-none focus:border-brand-primary/50 transition-all font-medium"
+                                        
                                         value={skillNameInput}
                                         onChange={(e) => setSkillNameInput(e.target.value)}
                                     />
                                     <input 
                                         type="number" 
                                         placeholder="%"
-                                        className="md:col-span-1 bg-slate-800 border border-white/5 rounded-2xl py-4 px-6 text-white focus:outline-none focus:border-brand-primary/50 transition-all font-medium text-center"
+                                        
                                         value={skillPercentInput}
                                         onChange={(e) => setSkillPercentInput(e.target.value)}
                                     />
-                                    <button onClick={handleSkillSubmit} className="md:col-span-1 py-4 rounded-2xl bg-brand-primary text-white hover:bg-violet-600 transition-all flex items-center justify-center gap-2 font-bold shadow-lg shadow-brand-primary/20">
+                                    <button onClick={handleSkillSubmit} >
                                         <FaPlus /> Add
                                     </button>
                                 </div>
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4 border-t border-white/5">
+                                <div >
                                     {skillsList.length > 0 ? skillsList.map((item, index) => (
                                         <div 
                                             key={item._id} 
@@ -335,17 +335,17 @@ const ResumeCard = () => {
                                             onDragEnter={(e) => handleDragEnter(e, index, "skills")}
                                             onDragEnd={handleDragEnd}
                                             onDragOver={(e) => e.preventDefault()}
-                                            className={`flex justify-between items-center p-4 bg-slate-800/50 rounded-2xl group hover:bg-slate-800 transition-all cursor-move border border-white/5 hover:border-white/10 ${draggingIndex === index && draggingSection === "skills" ? "opacity-50 ring-2 ring-brand-primary" : ""}`}
+                                            
                                         >
-                                            <div className="flex flex-col">
-                                                <span className="text-white font-bold">{item.name}</span>
-                                                <span className="text-brand-secondary text-xs uppercase tracking-widest font-bold">{item.percentage}% Efficiency</span>
+                                            <div >
+                                                <span >{item.name}</span>
+                                                <span >{item.percentage}% Efficiency</span>
                                             </div>
-                                            <button onClick={() => handleDeleteSkill(item._id)} className="p-2 text-slate-500 hover:text-red-400 transition-colors">
+                                            <button onClick={() => handleDeleteSkill(item._id)} >
                                                 <FaTrash />
                                             </button>
                                         </div>
-                                    )) : <p className="text-slate-500 text-center col-span-full py-8 italic">No skills added yet.</p>}
+                                    )) : <p >No skills added yet.</p>}
                                 </div>
                             </section>
                         )}
@@ -359,13 +359,9 @@ const ResumeCard = () => {
 const TabButton = ({ active, onClick, icon, label }) => (
     <button 
         onClick={onClick}
-        className={`w-full flex items-center gap-4 px-6 py-4 rounded-2xl transition-all duration-300 font-bold ${
-            active 
-            ? "bg-brand-primary text-white shadow-lg shadow-brand-primary/20" 
-            : "text-slate-400 hover:text-white hover:bg-white/5"
-        }`}
+        
     >
-        <span className={active ? "scale-110" : ""}>{icon}</span>
+        <span >{icon}</span>
         <span>{label}</span>
     </button>
 );

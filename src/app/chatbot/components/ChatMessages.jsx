@@ -1,17 +1,18 @@
 import React from "react";
 
 const ChatMessages = ({ messages, loading, messagesEndRef }) => (
-    <div className="flex-1 overflow-y-auto p-4 space-y-4 scrollbar-custom">
+    <div className="space-y-4">
         {messages.map((msg, idx) => (
             <div
                 key={idx}
-                className={`flex ${msg.from === "user" ? "justify-end" : "justify-start animate-fade-in"}`}
+                className={`flex ${msg.from === "user" ? "justify-end" : "justify-start"} animate-fadeInUp`}
+                style={{ animationDelay: `${idx * 0.05}s` }}
             >
                 <div
-                    className={`max-w-[85%] px-4 py-2.5 rounded-2xl text-[13px] leading-relaxed font-medium shadow-sm transition-all whitespace-pre-line break-words ${
-                        msg.from === "user" 
-                        ? "bg-brand-primary text-white rounded-br-none" 
-                        : "bg-slate-800 text-slate-200 rounded-bl-none border border-white/5"
+                    className={`max-w-[85%] p-4 rounded-[1.5rem] text-sm font-medium shadow-sm leading-relaxed ${
+                        msg.from === "user"
+                            ? "bg-accent text-white rounded-br-none"
+                            : "bg-bg-card text-text-primary border border-border-color rounded-bl-none"
                     }`}
                 >
                     {msg.text}
@@ -19,11 +20,11 @@ const ChatMessages = ({ messages, loading, messagesEndRef }) => (
             </div>
         ))}
         {loading && (
-            <div className="flex justify-start animate-fade-in">
-                <div className="bg-slate-800 text-slate-200 px-4 py-3 rounded-2xl rounded-bl-none border border-white/5 flex gap-1 items-center">
-                    <div className="w-1.5 h-1.5 bg-slate-500 rounded-full animate-bounce"></div>
-                    <div className="w-1.5 h-1.5 bg-slate-500 rounded-full animate-bounce [animation-delay:0.2s]"></div>
-                    <div className="w-1.5 h-1.5 bg-slate-500 rounded-full animate-bounce [animation-delay:0.4s]"></div>
+            <div className="flex justify-start animate-fadeInUp">
+                <div className="bg-bg-card border border-border-color px-5 py-3 rounded-[1.2rem] rounded-bl-none flex gap-1.5 items-center">
+                    <div className="w-1.5 h-1.5 bg-accent/60 rounded-full animate-bounce"></div>
+                    <div className="w-1.5 h-1.5 bg-accent/60 rounded-full animate-bounce [animation-delay:0.2s]"></div>
+                    <div className="w-1.5 h-1.5 bg-accent/60 rounded-full animate-bounce [animation-delay:0.4s]"></div>
                 </div>
             </div>
         )}

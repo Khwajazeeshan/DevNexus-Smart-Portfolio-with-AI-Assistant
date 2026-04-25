@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
-export function proxy(request: NextRequest) {
+export function middleware(request: NextRequest) {
     const path = request.nextUrl.pathname;
 
     const isLoginPath = path === "/login";
@@ -23,8 +23,8 @@ export function proxy(request: NextRequest) {
 
 export const config = {
     matcher: [
-        '/login',
-        '/admindashboard',
-        '/admindashboard/:path*',
+        // '/login',
+        // '/admindashboard',
+        // '/admindashboard/:path*',
     ]
 }
