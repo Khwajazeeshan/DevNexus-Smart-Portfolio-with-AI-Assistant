@@ -52,10 +52,10 @@ export default function Navbar({ sections }) {
 
     const scrollToSection = (ref) => {
         if (ref && ref.current) {
-            const offset = 80;
-            const top = ref.current.offsetTop - offset;
-            window.scrollTo({ top, behavior: "smooth" });
             setMenuOpen(false);
+            const offset = 80;
+            const top = ref.current.getBoundingClientRect().top + window.pageYOffset - offset;
+            window.scrollTo({ top, behavior: "smooth" });
         }
     };
 
@@ -131,7 +131,7 @@ export default function Navbar({ sections }) {
 
             {/* Mobile Dropdown Menu */}
             <div 
-                className={`md:hidden overflow-hidden transition-all duration-500 ease-in-out bg-bg-card/95 backdrop-blur-xl border-b border-border-color ${menuOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"}`}
+                className={`absolute top-full left-0 w-full md:hidden overflow-hidden transition-all duration-500 ease-in-out bg-white dark:bg-bg-card border-b border-border-color ${menuOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"}`}
             >
                 <div className="px-4 py-6 space-y-4 shadow-custom">
                     <div className="flex flex-col space-y-3">

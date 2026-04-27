@@ -70,7 +70,7 @@ const About = forwardRef(({ onComplete, onReady }, ref) => {
             {/* Animated Gradient Background Orbs */}
             <div className="absolute top-[10%] -left-32 w-[30rem] h-[30rem] bg-accent/20 rounded-full mix-blend-multiply dark:mix-blend-lighten filter blur-[128px] opacity-70 animate-float" style={{ animationDuration: '8s' }}></div>
             <div className="absolute bottom-[10%] -right-32 w-[30rem] h-[30rem] bg-accent-2/20 rounded-full mix-blend-multiply dark:mix-blend-lighten filter blur-[128px] opacity-70 animate-float" style={{ animationDelay: '2s', animationDuration: '9s' }}></div>
-            
+
             <div className="max-w-7xl mx-auto w-full relative z-10">
                 {loading ? null : !aboutData ? (
                     <div className="flex justify-center items-center h-64 bg-bg-card rounded-3xl shadow-custom border border-border-color">
@@ -129,7 +129,7 @@ const About = forwardRef(({ onComplete, onReady }, ref) => {
                                         ))}
                                     </div>
                                 )}
-                                
+
                                 <div className={`flex items-center justify-center lg:justify-start gap-6 sm:gap-8 lg:gap-16 transition-all duration-1000 ${visibleLines.length === descriptionLines.length ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
                                     <div className="flex items-center gap-3 sm:gap-4">
                                         <div className="text-3xl sm:text-4xl md:text-5xl font-heading font-bold text-text-primary">
@@ -152,7 +152,7 @@ const About = forwardRef(({ onComplete, onReady }, ref) => {
 
                         {/* Right Content - Profile Image */}
                         <div className="flex-1 w-full flex justify-center items-center lg:justify-end relative group">
-                            <div className="relative w-56 h-56 xs:w-64 xs:h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96 w-full max-w-sm shrink-0">
+                            <div className="relative w-full max-w-sm aspect-[5/5]">
                                 {/* Decorative Background Glows */}
                                 <div className="absolute inset-0 bg-gradient-to-tr from-accent to-accent-2 rounded-[2rem] md:rounded-[3rem] rotate-6 opacity-20 blur-xl group-hover:rotate-12 group-hover:scale-105 transition-all duration-700 ease-out"></div>
                                 <div className="absolute inset-0 bg-gradient-to-tr from-accent to-accent-2 rounded-[2rem] md:rounded-[3rem] -rotate-3 opacity-20 blur-xl group-hover:-rotate-6 group-hover:scale-105 transition-all duration-700 ease-out delay-75"></div>
@@ -162,7 +162,7 @@ const About = forwardRef(({ onComplete, onReady }, ref) => {
                                         <img
                                             src={profileImage}
                                             alt="profile"
-                                            className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                            className="h-auto w-full object-cover object-top"
                                         />
                                     ) : (
                                         <div className="font-heading font-medium text-text-secondary">
