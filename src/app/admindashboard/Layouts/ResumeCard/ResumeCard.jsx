@@ -182,67 +182,80 @@ const ResumeCard = () => {
     };
 
     return (
-        <div >
-            <Toaster position="top-right" />
+        <div className="min-h-screen bg-bg-primary font-body pb-12">
+            <Toaster position="top-right" toastOptions={{ className: 'font-body rounded-xl font-medium shadow-custom border border-border-color bg-bg-card text-text-primary' }} />
             
-            <div >
-                <header >
-                    <div>
-                        <Link href="/admindashboard" >
-                            <FaArrowLeft  />
+            <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 md:pt-12">
+                <header className="mb-10 animate-fadeInUp">
+                    <div className="flex flex-col gap-4">
+                        <Link href="/admindashboard" className="flex items-center gap-2 text-text-secondary hover:text-accent font-medium transition-all group w-fit">
+                            <FaArrowLeft className="group-hover:-translate-x-1 transition-transform" />
                             <span>Back to Dashboard</span>
                         </Link>
-                        <h1 >Resume Manager</h1>
-                        <p >Design your career path and technical expertise.</p>
+                        <div>
+                            <h1 className="text-3xl md:text-4xl font-heading font-black tracking-tight text-text-primary">
+                                Career Stack<span className="text-accent">.</span>
+                            </h1>
+                            <p className="mt-2 text-text-secondary text-sm md:text-base font-medium max-w-2xl">Construct and refine your professional timeline, educational background, and technical arsenal.</p>
+                        </div>
                     </div>
                 </header>
 
-                <div >
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
                     {/* Sidebar Tabs */}
-                    <div >
-                        <div >
+                    <div className="lg:col-span-3 bg-bg-card rounded-[2rem] p-4 md:p-6 border border-border-color shadow-sm animate-fadeInUp" style={{ animationDelay: '0.1s' }}>
+                        <div className="flex flex-row lg:flex-col gap-2 overflow-x-auto lg:overflow-visible pb-2 lg:pb-0 custom-scrollbar">
                             <TabButton 
                                 active={activeSection === "education"} 
                                 onClick={() => setActiveSection("education")}
-                                icon={<FaGraduationCap />}
+                                icon={<FaGraduationCap size={16} />}
                                 label="Education"
                             />
                             <TabButton 
                                 active={activeSection === "experience"} 
                                 onClick={() => setActiveSection("experience")}
-                                icon={<FaBriefcase />}
+                                icon={<FaBriefcase size={16} />}
                                 label="Experience"
                             />
                             <TabButton 
                                 active={activeSection === "skills"} 
                                 onClick={() => setActiveSection("skills")}
-                                icon={<FaCode />}
-                                label="Skills"
+                                icon={<FaCode size={16} />}
+                                label="Technical"
                             />
                         </div>
                     </div>
 
                     {/* Content Area */}
-                    <div >
+                    <div className="lg:col-span-9 animate-fadeInUp" style={{ animationDelay: '0.2s' }}>
                         {activeSection === "education" && (
-                            <section >
-                                <h2 >
-                                    <FaGraduationCap  /> Manage Education
-                                </h2>
-                                <div >
-                                    <input 
-                                        type="text" 
-                                        placeholder="Enter Education (e.g. BS in CS - University, 2021)"
-                                        
-                                        value={educationInput}
-                                        onChange={(e) => setEducationInput(e.target.value)}
-                                        onKeyDown={(e) => e.key === "Enter" && handleEducationSubmit()}
-                                    />
-                                    <button onClick={handleEducationSubmit} >
-                                        <FaPlus /> Add Item
-                                    </button>
+                            <section className="space-y-6">
+                                <div className="bg-bg-card p-6 md:p-8 rounded-[2rem] border border-border-color shadow-sm space-y-6">
+                                    <h2 className="text-xl font-heading font-black text-text-primary flex items-center gap-3">
+                                        <div className="p-2.5 bg-accent/10 rounded-xl text-accent">
+                                            <FaGraduationCap size={20} />
+                                        </div>
+                                        Academic History
+                                    </h2>
+                                    <div className="flex flex-col sm:flex-row gap-3">
+                                        <input 
+                                            type="text" 
+                                            placeholder="Entry details (e.g. BS in CS - Stanford University, 2021)"
+                                            className="flex-1 px-5 py-3.5 rounded-xl bg-bg-primary border border-border-color focus:border-accent focus:ring-4 focus:ring-accent/10 outline-none transition-all font-medium text-text-primary placeholder:text-text-secondary/30"
+                                            value={educationInput}
+                                            onChange={(e) => setEducationInput(e.target.value)}
+                                            onKeyDown={(e) => e.key === "Enter" && handleEducationSubmit()}
+                                        />
+                                        <button 
+                                            onClick={handleEducationSubmit} 
+                                            className="px-6 py-3.5 rounded-xl bg-accent text-white font-bold tracking-wide shadow-lg shadow-accent/20 hover:shadow-accent/40 hover:-translate-y-1 active:scale-95 transition-all flex items-center justify-center gap-2"
+                                        >
+                                            <FaPlus /> <span className="hidden sm:inline">Add Item</span>
+                                        </button>
+                                    </div>
                                 </div>
-                                <div >
+
+                                <div className="space-y-4 max-h-[50vh] overflow-y-auto pr-2 custom-scrollbar">
                                     {educationList.length > 0 ? educationList.map((item, index) => (
                                         <div 
                                             key={item._id} 
@@ -251,37 +264,58 @@ const ResumeCard = () => {
                                             onDragEnter={(e) => handleDragEnter(e, index, "education")}
                                             onDragEnd={handleDragEnd}
                                             onDragOver={(e) => e.preventDefault()}
-                                            
+                                            className={`group bg-bg-card p-5 rounded-2xl border ${draggingIndex === index && draggingSection === "education" ? 'border-accent opacity-50' : 'border-border-color'} hover:border-accent/40 hover:shadow-md transition-all duration-300 flex items-center justify-between gap-4 cursor-grab active:cursor-grabbing`}
                                         >
-                                            <span >{item.education}</span>
-                                            <button onClick={() => handleDeleteEducation(item._id)} >
-                                                <FaTrash />
+                                            <div className="flex items-center gap-4 min-w-0">
+                                                <div className="w-8 h-8 rounded-lg bg-bg-primary flex items-center justify-center text-text-secondary/30 group-hover:text-accent transition-colors">
+                                                    <FaGraduationCap size={14} />
+                                                </div>
+                                                <span className="text-sm font-bold text-text-primary truncate">{item.education}</span>
+                                            </div>
+                                            <button 
+                                                onClick={() => handleDeleteEducation(item._id)} 
+                                                className="p-2.5 rounded-lg bg-red-500/5 text-red-500 hover:bg-red-500 hover:text-white transition-all shadow-sm active:scale-90"
+                                            >
+                                                <FaTrash size={14} />
                                             </button>
                                         </div>
-                                    )) : <p >No education entries found.</p>}
+                                    )) : (
+                                        <div className="p-12 bg-bg-card/50 border-2 border-dashed border-border-color rounded-[2rem] text-center">
+                                            <p className="text-text-secondary text-sm font-medium italic">No education modules found.</p>
+                                        </div>
+                                    )}
                                 </div>
                             </section>
                         )}
 
                         {activeSection === "experience" && (
-                            <section >
-                                <h2 >
-                                    <FaBriefcase  /> Manage Experience
-                                </h2>
-                                <div >
-                                    <input 
-                                        type="text" 
-                                        placeholder="Enter Experience (e.g. Developer - Corp, 2022-Present)"
-                                        
-                                        value={experienceInput}
-                                        onChange={(e) => setExperienceInput(e.target.value)}
-                                        onKeyDown={(e) => e.key === "Enter" && handleExperienceSubmit()}
-                                    />
-                                    <button onClick={handleExperienceSubmit} >
-                                        <FaPlus /> Add Item
-                                    </button>
+                            <section className="space-y-6">
+                                <div className="bg-bg-card p-6 md:p-8 rounded-[2rem] border border-border-color shadow-sm space-y-6">
+                                    <h2 className="text-xl font-heading font-black text-text-primary flex items-center gap-3">
+                                        <div className="p-2.5 bg-accent/10 rounded-xl text-accent">
+                                            <FaBriefcase size={20} />
+                                        </div>
+                                        Professional Timeline
+                                    </h2>
+                                    <div className="flex flex-col sm:flex-row gap-3">
+                                        <input 
+                                            type="text" 
+                                            placeholder="Entry details (e.g. Senior Dev - Google, 2022-Present)"
+                                            className="flex-1 px-5 py-3.5 rounded-xl bg-bg-primary border border-border-color focus:border-accent focus:ring-4 focus:ring-accent/10 outline-none transition-all font-medium text-text-primary placeholder:text-text-secondary/30"
+                                            value={experienceInput}
+                                            onChange={(e) => setExperienceInput(e.target.value)}
+                                            onKeyDown={(e) => e.key === "Enter" && handleExperienceSubmit()}
+                                        />
+                                        <button 
+                                            onClick={handleExperienceSubmit} 
+                                            className="px-6 py-3.5 rounded-xl bg-accent text-white font-bold tracking-wide shadow-lg shadow-accent/20 hover:shadow-accent/40 hover:-translate-y-1 active:scale-95 transition-all flex items-center justify-center gap-2"
+                                        >
+                                            <FaPlus /> <span className="hidden sm:inline">Add Item</span>
+                                        </button>
+                                    </div>
                                 </div>
-                                <div >
+
+                                <div className="space-y-4 max-h-[50vh] overflow-y-auto pr-2 custom-scrollbar">
                                     {experienceList.length > 0 ? experienceList.map((item, index) => (
                                         <div 
                                             key={item._id} 
@@ -290,43 +324,67 @@ const ResumeCard = () => {
                                             onDragEnter={(e) => handleDragEnter(e, index, "experience")}
                                             onDragEnd={handleDragEnd}
                                             onDragOver={(e) => e.preventDefault()}
-                                            
+                                            className={`group bg-bg-card p-5 rounded-2xl border ${draggingIndex === index && draggingSection === "experience" ? 'border-accent opacity-50' : 'border-border-color'} hover:border-accent/40 hover:shadow-md transition-all duration-300 flex items-center justify-between gap-4 cursor-grab active:cursor-grabbing`}
                                         >
-                                            <span >{item.experience}</span>
-                                            <button onClick={() => handleDeleteExperience(item._id)} >
-                                                <FaTrash />
+                                            <div className="flex items-center gap-4 min-w-0">
+                                                <div className="w-8 h-8 rounded-lg bg-bg-primary flex items-center justify-center text-text-secondary/30 group-hover:text-accent transition-colors">
+                                                    <FaBriefcase size={14} />
+                                                </div>
+                                                <span className="text-sm font-bold text-text-primary truncate">{item.experience}</span>
+                                            </div>
+                                            <button 
+                                                onClick={() => handleDeleteExperience(item._id)} 
+                                                className="p-2.5 rounded-lg bg-red-500/5 text-red-500 hover:bg-red-500 hover:text-white transition-all shadow-sm active:scale-90"
+                                            >
+                                                <FaTrash size={14} />
                                             </button>
                                         </div>
-                                    )) : <p >No experience entries found.</p>}
+                                    )) : (
+                                        <div className="p-12 bg-bg-card/50 border-2 border-dashed border-border-color rounded-[2rem] text-center">
+                                            <p className="text-text-secondary text-sm font-medium italic">No experience modules found.</p>
+                                        </div>
+                                    )}
                                 </div>
                             </section>
                         )}
 
                         {activeSection === "skills" && (
-                            <section >
-                                <h2 >
-                                    <FaCode  /> Manage Skills
-                                </h2>
-                                <div >
-                                    <input 
-                                        type="text" 
-                                        placeholder="Skill Name (e.g. React)"
-                                        
-                                        value={skillNameInput}
-                                        onChange={(e) => setSkillNameInput(e.target.value)}
-                                    />
-                                    <input 
-                                        type="number" 
-                                        placeholder="%"
-                                        
-                                        value={skillPercentInput}
-                                        onChange={(e) => setSkillPercentInput(e.target.value)}
-                                    />
-                                    <button onClick={handleSkillSubmit} >
-                                        <FaPlus /> Add
-                                    </button>
+                            <section className="space-y-6">
+                                <div className="bg-bg-card p-6 md:p-8 rounded-[2rem] border border-border-color shadow-sm space-y-6">
+                                    <h2 className="text-xl font-heading font-black text-text-primary flex items-center gap-3">
+                                        <div className="p-2.5 bg-accent/10 rounded-xl text-accent">
+                                            <FaCode size={20} />
+                                        </div>
+                                        Technical Arsenal
+                                    </h2>
+                                    <div className="flex flex-col sm:flex-row gap-3">
+                                        <input 
+                                            type="text" 
+                                            placeholder="Skill (e.g. React)"
+                                            className="sm:flex-1 px-5 py-3.5 rounded-xl bg-bg-primary border border-border-color focus:border-accent focus:ring-4 focus:ring-accent/10 outline-none transition-all font-medium text-text-primary placeholder:text-text-secondary/30"
+                                            value={skillNameInput}
+                                            onChange={(e) => setSkillNameInput(e.target.value)}
+                                        />
+                                        <div className="w-full sm:w-32 relative">
+                                            <input 
+                                                type="number" 
+                                                placeholder="%"
+                                                className="w-full pl-5 pr-10 py-3.5 rounded-xl bg-bg-primary border border-border-color focus:border-accent focus:ring-4 focus:ring-accent/10 outline-none transition-all font-medium text-text-primary placeholder:text-text-secondary/30"
+                                                value={skillPercentInput}
+                                                onChange={(e) => setSkillPercentInput(e.target.value)}
+                                            />
+                                            <span className="absolute right-4 top-1/2 -translate-y-1/2 text-xs font-bold text-text-secondary/40">%</span>
+                                        </div>
+                                        <button 
+                                            onClick={handleSkillSubmit} 
+                                            className="px-6 py-3.5 rounded-xl bg-accent text-white font-bold tracking-wide shadow-lg shadow-accent/20 hover:shadow-accent/40 hover:-translate-y-1 active:scale-95 transition-all flex items-center justify-center gap-2"
+                                        >
+                                            <FaPlus /> <span className="hidden sm:inline">Add</span>
+                                        </button>
+                                    </div>
                                 </div>
-                                <div >
+
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-h-[50vh] overflow-y-auto pr-2 custom-scrollbar">
                                     {skillsList.length > 0 ? skillsList.map((item, index) => (
                                         <div 
                                             key={item._id} 
@@ -335,17 +393,41 @@ const ResumeCard = () => {
                                             onDragEnter={(e) => handleDragEnter(e, index, "skills")}
                                             onDragEnd={handleDragEnd}
                                             onDragOver={(e) => e.preventDefault()}
-                                            
+                                            className={`group bg-bg-card p-5 rounded-2xl border ${draggingIndex === index && draggingSection === "skills" ? 'border-accent opacity-50' : 'border-border-color'} hover:border-accent/40 hover:shadow-md transition-all duration-300 space-y-4 cursor-grab active:cursor-grabbing`}
                                         >
-                                            <div >
-                                                <span >{item.name}</span>
-                                                <span >{item.percentage}% Efficiency</span>
+                                            <div className="flex items-center justify-between min-w-0">
+                                                <div className="flex items-center gap-3 min-w-0">
+                                                    <div className="w-8 h-8 rounded-lg bg-bg-primary flex items-center justify-center text-accent/40 group-hover:text-accent transition-colors">
+                                                        <FaCode size={14} />
+                                                    </div>
+                                                    <span className="text-sm font-bold text-text-primary truncate uppercase tracking-tight">{item.name}</span>
+                                                </div>
+                                                <button 
+                                                    onClick={() => handleDeleteSkill(item._id)} 
+                                                    className="p-2.5 rounded-lg bg-red-500/5 text-red-500 hover:bg-red-500 hover:text-white transition-all shadow-sm active:scale-90"
+                                                >
+                                                    <FaTrash size={14} />
+                                                </button>
                                             </div>
-                                            <button onClick={() => handleDeleteSkill(item._id)} >
-                                                <FaTrash />
-                                            </button>
+                                            
+                                            <div className="space-y-2">
+                                                <div className="flex justify-between items-end">
+                                                    <span className="text-[10px] font-bold text-text-secondary uppercase tracking-widest opacity-60">Competency</span>
+                                                    <span className="text-xs font-black text-accent">{item.percentage}%</span>
+                                                </div>
+                                                <div className="w-full h-2 bg-bg-primary rounded-full overflow-hidden border border-border-color/50">
+                                                    <div 
+                                                        className="h-full bg-gradient-to-r from-accent to-accent-2 transition-all duration-1000 ease-out" 
+                                                        style={{ width: `${item.percentage}%` }}
+                                                    ></div>
+                                                </div>
+                                            </div>
                                         </div>
-                                    )) : <p >No skills added yet.</p>}
+                                    )) : (
+                                        <div className="col-span-full p-12 bg-bg-card/50 border-2 border-dashed border-border-color rounded-[2rem] text-center">
+                                            <p className="text-text-secondary text-sm font-medium italic">No technical units initialized.</p>
+                                        </div>
+                                    )}
                                 </div>
                             </section>
                         )}
@@ -359,9 +441,9 @@ const ResumeCard = () => {
 const TabButton = ({ active, onClick, icon, label }) => (
     <button 
         onClick={onClick}
-        
+        className={`flex items-center gap-3 px-6 py-4 rounded-2xl transition-all duration-300 font-bold text-sm tracking-tight whitespace-nowrap lg:w-full ${active ? 'bg-accent text-white shadow-lg shadow-accent/25 translate-x-1' : 'bg-bg-primary/50 text-text-secondary border border-transparent hover:border-accent/30 hover:bg-bg-primary hover:text-text-primary'}`}
     >
-        <span >{icon}</span>
+        <span className={active ? 'text-white' : 'text-accent'}>{icon}</span>
         <span>{label}</span>
     </button>
 );

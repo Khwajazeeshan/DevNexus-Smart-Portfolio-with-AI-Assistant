@@ -58,14 +58,14 @@ export default function Footer() {
 
 
                 {/* Social Icons */}
-                <div className="flex flex-wrap justify-center gap-6 mb-8 animate-fadeInUp" style={{ animationDelay: '0.2s' }}>
+                <div className="flex flex-wrap justify-center gap-6  animate-fadeInUp" style={{ animationDelay: '0.2s' }}>
                     {socialLinks.map((social, index) => (
                         <a
                             key={index}
                             href={social.link || "#"}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="group relative p-4 bg-bg-primary border border-border-color rounded-2xl shadow-sm hover:shadow-custom hover:-translate-y-2 transition-all duration-500 ease-out flex items-center justify-center overflow-hidden text-text-secondary hover:text-accent"
+                            className="group relative p-2 bg-bg-primary border border-border-color rounded-2xl shadow-sm hover:shadow-custom hover:-translate-y-2 transition-all duration-500 ease-out flex items-center justify-center overflow-hidden text-text-secondary hover:text-accent"
                             aria-label={social.label}
                         >
                             <div className="absolute inset-0 bg-gradient-to-tr from-accent/0 to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
@@ -84,11 +84,9 @@ export default function Footer() {
                 {/* Copyright */}
                 <div className="text-center animate-fadeInUp" style={{ animationDelay: '0.3s' }}>
                     <div className="flex items-center justify-center gap-4 mb-6 opacity-50">
-                        <span className="w-12 h-[1px] bg-border-color"></span>
-                        <span className="text-xs font-bold tracking-widest uppercase text-text-secondary">Signature Line</span>
-                        <span className="w-12 h-[1px] bg-border-color"></span>
+                        <span className="w-22 h-[1px] bg-border-color"></span>
                     </div>
-                    <p className="text-text-secondary font-medium">
+                    <p className="text-text-secondary font-medium text-[12px] xs:text-xs sm:text-base whitespace-nowrap px-2">
                         © {new Date().getFullYear()} <span className="font-bold text-text-primary">{userName.toUpperCase()}</span> || <span className="italic"> All Rights Reserved.</span>
                     </p>
                 </div>

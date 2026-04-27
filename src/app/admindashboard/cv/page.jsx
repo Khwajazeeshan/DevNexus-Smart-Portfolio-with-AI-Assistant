@@ -83,91 +83,96 @@ export default function AdminCVPage() {
     };
 
     return (
-        <div >
-            <Toaster position="top-right" />
+        <div className="min-h-screen bg-bg-primary font-body pb-12">
+            <Toaster position="top-right" toastOptions={{ className: 'font-body rounded-xl font-medium shadow-custom border border-border-color bg-bg-card text-text-primary' }} />
             
-            <div >
-                <header >
-                    <div>
-                        <Link href="/admindashboard" >
-                            <FaArrowLeft  />
+            <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 md:pt-12">
+                <header className="mb-10 animate-fadeInUp">
+                    <div className="flex flex-col gap-4">
+                        <Link href="/admindashboard" className="flex items-center gap-2 text-text-secondary hover:text-accent font-medium transition-all group w-fit">
+                            <FaArrowLeft className="group-hover:-translate-x-1 transition-transform" />
                             <span>Back to Dashboard</span>
                         </Link>
-                        <h1 >Portfolio Resume</h1>
-                        <p >Upload and manage your downloadable professional file.</p>
+                        <div>
+                            <h1 className="text-3xl md:text-4xl font-heading font-black tracking-tight text-text-primary">
+                                Document Control<span className="text-accent">.</span>
+                            </h1>
+                            <p className="mt-2 text-text-secondary text-sm md:text-base font-medium max-w-2xl">Initialize and maintain your downloadable professional artifacts for potential collaborators.</p>
+                        </div>
                     </div>
                 </header>
 
-                <div >
-                    <div >
-                        <label >Upload New Resume (PDF)</label>
+                <div className="space-y-8 animate-fadeInUp" style={{ animationDelay: '0.1s' }}>
+                    {/* Upload Section */}
+                    <div className="bg-bg-card rounded-[2rem] p-6 md:p-10 border border-border-color shadow-sm hover:shadow-custom transition-all duration-300">
+                        <label className="block text-xs font-bold uppercase tracking-widest text-text-secondary mb-4 px-1">Source Selection (PDF)</label>
                         
-                        <div >
+                        <div className="relative group cursor-pointer">
                             <input
                                 type="file"
                                 accept=".pdf,.doc,.docx"
                                 onChange={handleFileChange}
-                                
+                                className="absolute inset-0 w-full h-full opacity-0 z-50 cursor-pointer"
                             />
-                            <div >
-                                <div >
-                                    <div >
-                                        <FaCloudUploadAlt size={32} />
-                                    </div>
-                                    {selectedFile ? (
-                                        <div >
-                                            <p >{selectedFile.name}</p>
-                                            <p >{(selectedFile.size / 1024).toFixed(1)} KB</p>
-                                        </div>
-                                    ) : (
-                                        <div >
-                                            <p >Click to browse or drag & drop</p>
-                                            <p >PDF, DOC or DOCX (Max 5MB)</p>
-                                        </div>
-                                    )}
+                            <div className={`p-8 md:p-12 rounded-3xl border-2 border-dashed transition-all duration-300 flex flex-col items-center justify-center text-center gap-4 ${selectedFile ? 'border-accent bg-accent/5' : 'border-border-color hover:border-accent/40 bg-bg-primary/50'}`}>
+                                <div className={`w-16 h-16 rounded-2xl flex items-center justify-center transition-all duration-300 ${selectedFile ? 'bg-accent text-white scale-110' : 'bg-bg-card text-text-secondary group-hover:text-accent group-hover:scale-105'}`}>
+                                    <FaCloudUploadAlt size={32} />
                                 </div>
+                                {selectedFile ? (
+                                    <div className="space-y-1">
+                                        <p className="font-bold text-text-primary text-sm md:text-base break-all">{selectedFile.name}</p>
+                                        <p className="text-xs font-bold text-accent uppercase tracking-widest">{(selectedFile.size / 1024).toFixed(1)} KB Ready</p>
+                                    </div>
+                                ) : (
+                                    <div className="space-y-1">
+                                        <p className="font-bold text-text-primary text-sm md:text-base">Click to browse or drag & drop</p>
+                                        <p className="text-xs font-medium text-text-secondary">PDF, DOC or DOCX (Max 5MB)</p>
+                                    </div>
+                                )}
                             </div>
                         </div>
 
                         <button 
                             onClick={handleResumeUpload}
                             disabled={!selectedFile || isUploading}
-                            
+                            className="mt-8 w-full md:w-fit px-10 py-4 rounded-2xl bg-gradient-to-r from-accent to-accent-2 text-white font-bold tracking-wide shadow-lg shadow-accent/20 hover:shadow-accent/40 hover:-translate-y-1 active:scale-95 disabled:opacity-50 disabled:translate-y-0 transition-all flex items-center justify-center gap-3 group"
                         >
-                            <FaFileUpload /> {isUploading ? "Uploading..." : "Save Resume File"}
+                            <FaFileUpload className={`group-hover:scale-110 transition-transform ${isUploading ? 'animate-pulse' : ''}`} />
+                            <span>{isUploading ? "Transmitting..." : "Initialize Upload"}</span>
                         </button>
                     </div>
 
-                    {/* Current Resume Info */}
-                    <div >
-                        <h3 >Currently Published</h3>
+                    {/* Current File Status */}
+                    <div className="bg-bg-card rounded-[2rem] p-6 md:p-10 border border-border-color shadow-sm">
+                        <h3 className="text-xs font-bold uppercase tracking-widest text-text-secondary mb-6 px-1">Active Artifact</h3>
                         
                         {loading ? (
-                            <div  />
+                            <div className="h-20 bg-bg-primary animate-pulse rounded-2xl" />
                         ) : resumeUrl ? (
-                            <div >
-                                <div >
-                                    <div >
+                            <div className="flex flex-col sm:flex-row items-center justify-between gap-6 p-6 rounded-2xl bg-bg-primary border border-border-color hover:border-accent/30 transition-all group">
+                                <div className="flex items-center gap-5 w-full sm:w-auto">
+                                    <div className="w-14 h-14 rounded-xl bg-red-500/10 text-red-500 flex items-center justify-center shadow-sm">
                                         <FaFilePdf size={24} />
                                     </div>
-                                    <div >
-                                        <p >Active Portfolio Resume</p>
-                                        <p >{resumeUrl.split("/").pop()}</p>
+                                    <div className="min-w-0">
+                                        <p className="text-sm font-bold text-text-primary uppercase tracking-tight">Active Portfolio Resume</p>
+                                        <p className="text-xs font-medium text-text-secondary truncate max-w-[200px] md:max-w-xs">{resumeUrl.split("/").pop()}</p>
                                     </div>
                                 </div>
-                                <div >
+                                <div className="flex items-center gap-3 w-full sm:w-auto">
                                     <button 
                                         onClick={handleDownload}
-                                        
+                                        className="flex-1 sm:flex-none px-6 py-3 rounded-xl bg-bg-card border border-border-color hover:border-accent hover:text-accent text-text-secondary font-bold text-sm transition-all flex items-center justify-center gap-2"
                                         title="Download Current Resume"
                                     >
-                                        <FaExternalLinkAlt size={16} />
+                                        <FaExternalLinkAlt size={14} />
+                                        <span>Preview</span>
                                     </button>
                                 </div>
                             </div>
                         ) : (
-                            <div >
-                                <p >No resume file uploaded yet.</p>
+                            <div className="p-10 rounded-2xl border-2 border-dashed border-border-color text-center">
+                                <p className="text-text-secondary text-sm font-medium italic">No document initialized in current cluster.</p>
                             </div>
                         )}
                     </div>

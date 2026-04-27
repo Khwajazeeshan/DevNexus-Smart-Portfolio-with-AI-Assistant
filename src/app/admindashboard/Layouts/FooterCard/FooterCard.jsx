@@ -67,88 +67,95 @@ const FooterCard = () => {
     };
 
     return (
-        <div >
-            <Toaster position="top-right" />
+        <div className="min-h-screen bg-bg-primary font-body pb-12">
+            <Toaster position="top-right" toastOptions={{ className: 'font-body rounded-xl font-medium shadow-custom border border-border-color bg-bg-card text-text-primary' }} />
             
-            <div >
-                <header >
-                    <div>
-                        <Link href="/admindashboard" >
-                            <FaArrowLeft  />
+            <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 md:pt-12">
+                <header className="mb-10 animate-fadeInUp">
+                    <div className="flex flex-col gap-4">
+                        <Link href="/admindashboard" className="flex items-center gap-2 text-text-secondary hover:text-accent font-medium transition-all group w-fit">
+                            <FaArrowLeft className="group-hover:-translate-x-1 transition-transform" />
                             <span>Back to Dashboard</span>
                         </Link>
-                        <h1 >Social Connect</h1>
-                        <p >Link your professional profiles and social presence.</p>
+                        <div>
+                            <h1 className="text-3xl md:text-4xl font-heading font-black tracking-tight text-text-primary">
+                                Social Ecosystem<span className="text-accent">.</span>
+                            </h1>
+                            <p className="mt-2 text-text-secondary text-sm md:text-base font-medium max-w-2xl">Initialize and maintain your digital footprint across professional and social platforms.</p>
+                        </div>
                     </div>
                 </header>
 
-                <form onSubmit={handleFooterSubmit} >
-                    <div >
-                        {/* Facebook */}
-                        <div >
-                            <label >
-                                <FaFacebook  /> Facebook
-                            </label>
-                            <input
-                                type="text"
-                                
-                                placeholder="Facebook Profile URL"
-                                value={facebook}
-                                onChange={(e) => setFacebook(e.target.value)}
-                            />
+                <form onSubmit={handleFooterSubmit} className="space-y-8 animate-fadeInUp" style={{ animationDelay: '0.1s' }}>
+                    <div className="bg-bg-card rounded-[2rem] p-6 md:p-10 border border-border-color shadow-sm hover:shadow-custom transition-all duration-300">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            {/* Facebook */}
+                            <div className="space-y-2">
+                                <label className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-text-secondary px-1">
+                                    <FaFacebook size={12} className="text-[#1877F2]" /> Facebook Node
+                                </label>
+                                <input
+                                    type="text"
+                                    className="w-full px-6 py-4 rounded-2xl bg-bg-primary border border-border-color focus:border-[#1877F2] focus:ring-4 focus:ring-[#1877F2]/10 outline-none transition-all font-medium text-text-primary placeholder:text-text-secondary/30"
+                                    placeholder="Facebook Profile URL"
+                                    value={facebook}
+                                    onChange={(e) => setFacebook(e.target.value)}
+                                />
+                            </div>
+
+                            {/* Instagram */}
+                            <div className="space-y-2">
+                                <label className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-text-secondary px-1">
+                                    <FaInstagram size={12} className="text-[#E4405F]" /> Instagram Node
+                                </label>
+                                <input
+                                    type="text"
+                                    className="w-full px-6 py-4 rounded-2xl bg-bg-primary border border-border-color focus:border-[#E4405F] focus:ring-4 focus:ring-[#E4405F]/10 outline-none transition-all font-medium text-text-primary placeholder:text-text-secondary/30"
+                                    placeholder="Instagram Profile URL"
+                                    value={instagram}
+                                    onChange={(e) => setInstagram(e.target.value)}
+                                />
+                            </div>
+
+                            {/* GitHub */}
+                            <div className="space-y-2">
+                                <label className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-text-secondary px-1">
+                                    <FaGithub size={12} className="text-text-primary" /> GitHub Repository
+                                </label>
+                                <input
+                                    type="text"
+                                    className="w-full px-6 py-4 rounded-2xl bg-bg-primary border border-border-color focus:border-accent focus:ring-4 focus:ring-accent/10 outline-none transition-all font-medium text-text-primary placeholder:text-text-secondary/30"
+                                    placeholder="GitHub Profile URL"
+                                    value={github}
+                                    onChange={(e) => setGithub(e.target.value)}
+                                />
+                            </div>
+
+                            {/* LinkedIn */}
+                            <div className="space-y-2">
+                                <label className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-text-secondary px-1">
+                                    <FaLinkedin size={12} className="text-[#0A66C2]" /> LinkedIn Network
+                                </label>
+                                <input
+                                    type="text"
+                                    className="w-full px-6 py-4 rounded-2xl bg-bg-primary border border-border-color focus:border-[#0A66C2] focus:ring-4 focus:ring-[#0A66C2]/10 outline-none transition-all font-medium text-text-primary placeholder:text-text-secondary/30"
+                                    placeholder="LinkedIn Profile URL"
+                                    value={linkedin}
+                                    onChange={(e) => setLinkedin(e.target.value)}
+                                />
+                            </div>
                         </div>
 
-                        {/* Instagram */}
-                        <div >
-                            <label >
-                                <FaInstagram  /> Instagram
-                            </label>
-                            <input
-                                type="text"
-                                
-                                placeholder="Instagram Profile URL"
-                                value={instagram}
-                                onChange={(e) => setInstagram(e.target.value)}
-                            />
+                        <div className="mt-12">
+                            <button
+                                type="submit"
+                                disabled={isSaving}
+                                className="w-full md:w-fit px-10 py-4 rounded-2xl bg-gradient-to-r from-accent to-accent-2 text-white font-bold tracking-wide shadow-lg shadow-accent/20 hover:shadow-accent/40 hover:-translate-y-1 active:scale-95 disabled:opacity-50 disabled:translate-y-0 transition-all flex items-center justify-center gap-3 group"
+                            >
+                                <FaSave className={`group-hover:scale-110 transition-transform ${isSaving ? 'animate-pulse' : ''}`} />
+                                <span>{isSaving ? "Synchronizing..." : "Initialize Update"}</span>
+                            </button>
                         </div>
-
-                        {/* GitHub */}
-                        <div >
-                            <label >
-                                <FaGithub  /> GitHub
-                            </label>
-                            <input
-                                type="text"
-                                
-                                placeholder="GitHub Profile URL"
-                                value={github}
-                                onChange={(e) => setGithub(e.target.value)}
-                            />
-                        </div>
-
-                        {/* LinkedIn */}
-                        <div >
-                            <label >
-                                <FaLinkedin  /> LinkedIn
-                            </label>
-                            <input
-                                type="text"
-                                
-                                placeholder="LinkedIn Profile URL"
-                                value={linkedin}
-                                onChange={(e) => setLinkedin(e.target.value)}
-                            />
-                        </div>
-                    </div>
-
-                    <div >
-                        <button
-                            type="submit"
-                            disabled={isSaving}
-                            
-                        >
-                            <FaSave  /> {isSaving ? "Synchronizing..." : "Update Social Ecosystem"}
-                        </button>
                     </div>
                 </form>
             </div>

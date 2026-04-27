@@ -4,7 +4,7 @@ import { FaRobot, FaTimes } from "react-icons/fa";
 
 const ChatbotButton = ({ onClick, isOpen }) => (
     <button
-        className={`fixed bottom-8 right-8 z-[999] w-16 h-16 rounded-full flex items-center justify-center shadow-custom transition-all duration-500 hover:scale-110 active:scale-95 group overflow-hidden animate-float ${
+        className={`fixed bottom-4 right-2 z-[999] w-16 h-16 rounded-full flex items-center justify-center shadow-custom transition-all duration-500 hover:scale-110 active:scale-95 group overflow-hidden animate-float ${
             isOpen 
             ? "bg-bg-card border border-border-color text-text-primary rotate-180" 
             : "bg-accent text-white"
