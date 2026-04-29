@@ -19,14 +19,22 @@ const resumeSchema = new mongoose.Schema({
     ],
     skills: [
         {
-            name: {
+            category: {
                 type: String,
                 required: true
             },
-            percentage: {
-                type: Number,
-                required: true
-            }
+            subSkills: [
+                {
+                    name: {
+                        type: String,
+                        required: true
+                    },
+                    percentage: {
+                        type: Number,
+                        required: true
+                    }
+                }
+            ]
         }
     ],
     resumeUrl: {

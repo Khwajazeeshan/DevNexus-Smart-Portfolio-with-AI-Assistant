@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect, forwardRef } from "react";
-import { FaGithub, FaExternalLinkAlt, FaFolder, FaTerminal } from "react-icons/fa";
+import { FaGithub, FaExternalLinkAlt, FaFolder, FaTerminal, FaCode } from "react-icons/fa";
 
 const ensureHttps = (url) => {
     if (!url) return "";
@@ -40,12 +40,15 @@ const Project = forwardRef(({ onComplete }, ref) => {
             <div className="absolute left-[-10%] top-1/2 w-96 h-96 bg-accent-2/5 rounded-full blur-[100px] -z-10 animate-float" style={{ animationDelay: '3s' }} />
 
             <div className="text-center mb-16 animate-fadeInUp">
-                <h2 className="text-3xl sm:text-4xl md:text-5xl font-heading font-extrabold text-text-primary tracking-tight mb-4 sm:mb-6">
-                    Featured <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-accent-2">Innovations</span>
-                </h2>
-                <p className="text-base sm:text-lg text-text-secondary max-w-2xl mx-auto font-medium px-4">
-                    "Crafting digital excellence through code and creativity."
-                </p>
+                <div className="flex items-center justify-center gap-4 mb-4 sm:mb-6">
+                    <span className="p-4 inline-block bg-gradient-to-br from-bg-card to-bg-primary border border-border-color rounded-full shadow-custom text-accent animate-float">
+                        <FaCode size={24} />
+                    </span>
+                    <h2 className="text-3xl sm:text-4xl md:text-5xl font-heading font-extrabold text-text-primary tracking-tight">
+                        Projects
+                    </h2>
+                </div>
+
                 <div className="flex justify-center items-center gap-2 mt-6 sm:mt-8">
                     <span className="w-8 sm:w-12 h-1 bg-gradient-to-r from-transparent to-accent rounded-full"></span>
                     <span className="w-2.5 sm:w-3 h-2.5 sm:h-3 bg-accent rounded-full animate-glowPulse"></span>
