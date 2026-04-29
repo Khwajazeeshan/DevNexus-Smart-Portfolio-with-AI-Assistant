@@ -38,7 +38,7 @@ const Project = forwardRef(({ onComplete }, ref) => {
     return (
         <section ref={ref} className="relative py-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto z-10 w-full overflow-hidden">
             <div className="absolute left-[-10%] top-1/2 w-96 h-96 bg-accent-2/5 rounded-full blur-[100px] -z-10 animate-float" style={{ animationDelay: '3s' }} />
-            
+
             <div className="text-center mb-16 animate-fadeInUp">
                 <h2 className="text-3xl sm:text-4xl md:text-5xl font-heading font-extrabold text-text-primary tracking-tight mb-4 sm:mb-6">
                     Featured <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-accent-2">Innovations</span>
@@ -86,12 +86,12 @@ const Project = forwardRef(({ onComplete }, ref) => {
 
 const ProjectCard = ({ title, subtitle, link, description, technologies, isHighlighted = false, isGithubLink = false, isWider }) => (
     <div className={`group relative rounded-[2rem] overflow-hidden bg-bg-card border border-border-color shadow-sm hover:shadow-custom hover:-translate-y-2 transition-all duration-500 ease-out flex flex-col ${isWider ? 'lg:col-span-2' : 'lg:col-span-1'}`}>
-        
+
         {/* Aesthetic Thumbnail / Placeholder Wrapper */}
-      
+
 
         {/* Card Body */}
-        <div className="p-6 md:p-8 flex-1 flex flex-col relative z-10 bg-bg-card">
+        <div className="p-4 sm:p-6 md:p-8 flex-1 flex flex-col relative z-10 bg-bg-card">
             <div className="flex justify-between items-start mb-4">
                 <div className="p-3 bg-bg-primary/50 border border-border-color rounded-xl text-accent group-hover:bg-accent group-hover:text-white transition-all duration-500 transform group-hover:rotate-6">
                     {isGithubLink ? <FaGithub size={20} /> : <FaFolder size={20} />}
@@ -101,21 +101,21 @@ const ProjectCard = ({ title, subtitle, link, description, technologies, isHighl
                 </a>
             </div>
 
-            <h3 className="text-2xl font-heading font-bold text-text-primary mb-3 transition-colors duration-300 truncate">
+            <h3 className="text-xl sm:text-2xl font-heading font-bold text-text-primary mb-2 sm:mb-3 transition-colors duration-300 truncate">
                 {title}
             </h3>
 
-            <p className="text-text-secondary leading-relaxed mb-6 line-clamp-3 md:line-clamp-4">
+            <p className="text-text-secondary leading-relaxed mb-4 sm:mb-6 line-clamp-3 md:line-clamp-4 text-sm sm:text-base">
                 {description || subtitle || "A sophisticated technical project pushing the boundaries of modern development."}
             </p>
 
             {/* Technologies */}
             {technologies && technologies.length > 0 && (
-                <div className="flex flex-wrap gap-2 mt-auto">
+                <div className="flex flex-nowrap overflow-x-auto gap-1 sm:gap-2 mt-auto pb-2 sm:pb-0 sm:flex-wrap [ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
                     {technologies.map((tech, i) => (
-                        <span 
-                            key={i} 
-                            className="px-3 py-1 text-xs font-medium bg-bg-primary text-text-secondary rounded-lg border border-border-color shadow-sm group-hover:border-accent/30 transition-colors duration-300 animate-techBlink"
+                        <span
+                            key={i}
+                            className="px-2 py-0.5 text-[10px] sm:text-xs sm:px-3 sm:py-1 font-medium bg-bg-primary text-text-secondary rounded-lg border border-border-color shadow-sm group-hover:border-accent/30 transition-colors duration-300 animate-techBlink whitespace-nowrap"
                             style={{ animationDelay: `${i * 1.5}s` }}
                         >
                             {tech}
