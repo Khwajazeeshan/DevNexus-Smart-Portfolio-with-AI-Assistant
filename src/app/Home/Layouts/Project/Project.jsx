@@ -53,9 +53,8 @@ const Project = forwardRef(({ onComplete }, ref) => {
                 </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-auto">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8 auto-rows-fr">
                 {displayedProjects.map((project, index) => {
-                    const isWider = index % 4 === 0 || index % 4 === 3;
                     return (
                         <ProjectCard
                             key={index}
@@ -63,7 +62,6 @@ const Project = forwardRef(({ onComplete }, ref) => {
                             link={ensureHttps(project.link)}
                             description={project.description}
                             technologies={project.technologies}
-                            isWider={isWider}
                         />
                     );
                 })}
@@ -84,14 +82,14 @@ const Project = forwardRef(({ onComplete }, ref) => {
     );
 });
 
-const ProjectCard = ({ title, subtitle, link, description, technologies, isHighlighted = false, isGithubLink = false, isWider }) => (
-    <div className={`group relative rounded-[2rem] overflow-hidden bg-bg-card border border-border-color shadow-sm hover:shadow-custom hover:-translate-y-2 transition-all duration-500 ease-out flex flex-col ${isWider ? 'lg:col-span-2' : 'lg:col-span-1'}`}>
+const ProjectCard = ({ title, subtitle, link, description, technologies, isGithubLink = false }) => (
+    <div className="group relative rounded-[1.5rem] sm:rounded-[2rem] overflow-hidden bg-bg-card border border-border-color shadow-sm hover:shadow-custom hover:-translate-y-2 transition-all duration-500 ease-out flex flex-col h-full">
 
         {/* Aesthetic Thumbnail / Placeholder Wrapper */}
 
 
         {/* Card Body */}
-        <div className="p-4 sm:p-6 md:p-8 flex-1 flex flex-col relative z-10 bg-bg-card">
+        <div className="p-6 md:p-8 flex-1 flex flex-col relative z-10 bg-bg-card">
             <div className="flex justify-between items-start mb-4">
                 <div className="p-3 bg-bg-primary/50 border border-border-color rounded-xl text-accent group-hover:bg-accent group-hover:text-white transition-all duration-500 transform group-hover:rotate-6">
                     {isGithubLink ? <FaGithub size={20} /> : <FaFolder size={20} />}
@@ -101,11 +99,11 @@ const ProjectCard = ({ title, subtitle, link, description, technologies, isHighl
                 </a>
             </div>
 
-            <h3 className="text-xl sm:text-2xl font-heading font-bold text-text-primary mb-2 sm:mb-3 transition-colors duration-300 truncate">
+            <h3 className="text-xl sm:text-2xl font-heading font-bold text-text-primary mb-3 transition-colors duration-300 truncate">
                 {title}
             </h3>
 
-            <p className="text-text-secondary leading-relaxed mb-4 sm:mb-6 line-clamp-3 md:line-clamp-4 text-sm sm:text-base">
+            <p className="text-text-secondary leading-relaxed mb-4 sm:mb-6 line-clamp-3 sm:line-clamp-4 text-sm sm:text-base">
                 {description || subtitle || "A sophisticated technical project pushing the boundaries of modern development."}
             </p>
 

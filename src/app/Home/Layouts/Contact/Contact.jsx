@@ -110,18 +110,18 @@ const Contact = forwardRef(({ onComplete }, ref) => {
                     <div className="absolute top-0 right-0 w-64 h-64 bg-accent/5 rounded-full blur-3xl -z-0 translate-x-1/2 -translate-y-1/2"></div>
                     
                     <div className="relative z-10 text-center">
-                        <h3 className="text-2xl sm:text-3xl font-heading font-extrabold text-text-primary mb-8">
+                        <h3 className="text-1xl sm:text-3xl font-heading font-extrabold text-text-primary mb-8">
                             Follow me on <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-accent-2">Social Media</span>
                         </h3>
                         
-                        <div className="flex flex-wrap justify-center gap-4 sm:gap-6">
+                        <div className="flex flex-nowrap overflow-x-auto justify-center sm:justify-center gap-4 sm:gap-6 pb-4 sm:pb-0 [ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
                             {socialLinks.map((social, index) => (
                                 <a
                                     key={index}
                                     href={social.link || "#"}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="group relative flex items-center gap-3 px-6 py-3 bg-bg-primary border border-border-color rounded-2xl shadow-sm hover:shadow-custom hover:-translate-y-1 transition-all duration-300 overflow-hidden text-text-secondary hover:text-accent hover:border-accent/30"
+                                    className="group relative flex items-center gap-3 p-3 sm:px-6 sm:py-3 bg-bg-primary border border-border-color rounded-2xl shadow-sm hover:shadow-custom hover:-translate-y-1 transition-all duration-300 overflow-hidden text-text-secondary hover:text-accent hover:border-accent/30 flex-shrink-0"
                                     aria-label={social.label}
                                 >
                                     <div className="absolute inset-0 bg-gradient-to-tr from-accent/0 to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
