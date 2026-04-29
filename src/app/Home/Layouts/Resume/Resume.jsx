@@ -181,14 +181,15 @@ const Resume = forwardRef(({ onComplete }, outerRef) => {
                 </div>
 
                 {/* 3. Education Section */}
-                <div className="relative w-full">
-                    <div className="flex items-center gap-4 mb-5">
-                        <div className="p-4 bg-bg-card border border-border-color rounded-2xl text-accent-2 shadow-[0_4px_24px_rgba(34,211,238,0.15)] animate-glowPulse" style={{ animationDelay: '1s' }}>
-                            <FaGraduationCap size={28} />
-                        </div>
-                        <h3 className="text-3xl font-heading font-bold text-text-primary">Education</h3>
+                <div className="relative w-full text-center">
+                    <div className="p-5 inline-block bg-gradient-to-br from-bg-card to-bg-primary border border-border-color rounded-full shadow-custom text-accent-2 mb-6 animate-float">
+                        <FaGraduationCap size={28} />
                     </div>
-                    <div className="relative border-l-2 border-border-color pl-10 space-y-12 py-3">
+                    <h2 className="text-4xl md:text-5xl font-heading  text-text-primary tracking-tight mb-12">
+                        Education
+                    </h2>
+
+                    <div className="relative border-l-2 border-border-color pl-10 space-y-12 py-3 text-left">
                         {/* Vertical Line fill */}
                         <div className={`absolute left-[-2px] top-0 w-[2px] bg-gradient-to-b from-accent-2 to-accent transition-all ease-out duration-[2000ms] ${isVisible ? 'h-full' : 'h-0'}`}></div>
 
