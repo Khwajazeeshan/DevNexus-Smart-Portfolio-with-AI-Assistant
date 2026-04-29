@@ -5,12 +5,12 @@ import { NextResponse } from "next/server";
 export async function DELETE(request, { params }) {
     try {
         await connectDB();
-        const { id } = params;
+        const { id } = await params;
 
         const resume = await Resume.findOneAndUpdate(
             {},
             { $pull: { skills: { _id: id } } },
-            { new: true }
+            { returnDocument: 'after' }
         );
 
         if (!resume) {

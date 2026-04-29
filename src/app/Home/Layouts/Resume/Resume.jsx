@@ -172,7 +172,7 @@ const Resume = forwardRef(({ onComplete }, outerRef) => {
                                                             <span className="text-[8px] sm:text-xs uppercase tracking-wider text-text-secondary font-medium mb-0.5 sm:mb-1 truncate">{categoryItem.category}</span>
                                                             <span className="text-sm sm:text-lg font-heading font-bold text-text-primary group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-accent group-hover:to-accent-2 transition-colors duration-300 truncate">{skill.name}</span>
                                                         </div>
-                                                        <span className="text-accent font-bold text-sm sm:text-lg">{skill.percentage}%</span>
+                                                        {/* <span className="text-accent font-bold text-sm sm:text-lg">{skill.percentage}%</span> */}
                                                     </div>
                                                     <div className="h-1.5 sm:h-2 w-full bg-border-color rounded-full overflow-hidden relative z-10">
                                                         <div

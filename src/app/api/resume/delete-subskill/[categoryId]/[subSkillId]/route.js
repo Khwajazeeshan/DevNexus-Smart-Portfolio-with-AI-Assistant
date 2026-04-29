@@ -5,7 +5,7 @@ import { NextResponse } from "next/server";
 export async function DELETE(request, { params }) {
     try {
         await connectDB();
-        const { categoryId, subSkillId } = params;
+        const { categoryId, subSkillId } = await params;
 
         const resume = await Resume.findOne();
         if (!resume) {
@@ -17,7 +17,7 @@ export async function DELETE(request, { params }) {
             return NextResponse.json({ message: "Category not found" }, { status: 404 });
         }
 
-        category.subSkills.pull({ _id: subSkillId });
+        category.subSkills = category.subSkills.filter(skill => skill._id.toString() !== subSkillId);
         await resume.save();
 
         return NextResponse.json({ message: "Sub-skill deleted successfully", skills: resume.skills });

@@ -41,10 +41,10 @@ const Contact = forwardRef(({ onComplete }, ref) => {
     ];
 
     return (
-        <section ref={ref} className="relative py-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto z-10 w-full overflow-hidden">
+        <section ref={ref} className="relative py-5 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto z-10 w-full overflow-hidden">
             <div className="absolute right-[10%] bottom-0 w-[40rem] h-[40rem] bg-accent/5 rounded-full blur-[120px] -z-10 animate-pulse" />
 
-            <div className="mb-12">
+            <div className="mb-6">
                 <div className="animate-fadeInUp relative group">
                     <div className="absolute -inset-1 bg-gradient-to-r from-accent to-accent-2 rounded-3xl blur opacity-20 group-hover:opacity-40 transition duration-1000 group-hover:duration-200"></div>
                     <div className="relative flex flex-col md:flex-row items-center justify-between gap-6 sm:gap-8 p-6 sm:p-8 md:p-12 bg-bg-card border border-border-color rounded-[2rem] shadow-sm group-hover:shadow-custom overflow-hidden">
