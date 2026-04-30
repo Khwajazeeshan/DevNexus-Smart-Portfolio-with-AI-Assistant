@@ -18,6 +18,7 @@ const ResumeCard = () => {
     const [skillsList, setSkillsList] = useState([]);
     const [draggingIndex, setDraggingIndex] = useState(null);
     const [draggingSection, setDraggingSection] = useState(null);
+    const [draggingCategory, setDraggingCategory] = useState(null);
 
     const fetchResumeData = async () => {
         try {
@@ -158,14 +159,16 @@ const ResumeCard = () => {
         setExpandedCategories((prev) => ({ ...prev, [categoryId]: !prev[categoryId] }));
     };
 
-    const handleDragStart = (e, index, section) => {
+    const handleDragStart = (e, index, section, categoryId = null) => {
         setDraggingIndex(index);
         setDraggingSection(section);
+        if (categoryId) setDraggingCategory(categoryId);
         e.dataTransfer.effectAllowed = "move";
     };
 
-    const handleDragEnter = (e, index, section) => {
+    const handleDragEnter = (e, index, section, categoryId = null) => {
         if (draggingIndex === index || draggingSection !== section) return;
+        if (section === "subskills" && draggingCategory !== categoryId) return; // Prevent dragging across categories
         
         let newList = [];
         if (section === "education") {
@@ -186,26 +189,47 @@ const ResumeCard = () => {
             newList.splice(draggingIndex, 1);
             newList.splice(index, 0, draggedItem);
             setSkillsList(newList);
+        } else if (section === "subskills") {
+            newList = [...skillsList];
+            const categoryIndex = newList.findIndex(c => c._id === categoryId);
+            if (categoryIndex !== -1) {
+                const subSkillsList = [...newList[categoryIndex].subSkills];
+                const draggedItem = subSkillsList[draggingIndex];
+                subSkillsList.splice(draggingIndex, 1);
+                subSkillsList.splice(index, 0, draggedItem);
+                newList[categoryIndex].subSkills = subSkillsList;
+                setSkillsList(newList);
+            }
         }
         setDraggingIndex(index);
     };
 
     const handleDragEnd = async () => {
         const currentSection = draggingSection;
+        const currentCategory = draggingCategory;
         let ids = [];
+        let reqBody = { type: currentSection };
         
         if (currentSection === "education") ids = educationList.map(item => item._id);
         else if (currentSection === "experience") ids = experienceList.map(item => item._id);
         else if (currentSection === "skills") ids = skillsList.map(item => item._id);
+        else if (currentSection === "subskills") {
+            const category = skillsList.find(c => c._id === currentCategory);
+            ids = category ? category.subSkills.map(item => item._id) : [];
+            reqBody.categoryId = currentCategory;
+        }
+
+        reqBody.ids = ids;
 
         setDraggingIndex(null);
         setDraggingSection(null);
+        setDraggingCategory(null);
 
         try {
             const response = await fetch(`/api/resume/reorder-resume`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ type: currentSection, ids }),
+                body: JSON.stringify(reqBody),
             });
             if (response.ok) {
                 toast.success("Order saved");
@@ -475,8 +499,16 @@ const ResumeCard = () => {
 
                                                     {/* Sub-skills Grid */}
                                                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                                                        {categoryItem.subSkills && categoryItem.subSkills.length > 0 ? categoryItem.subSkills.map((subSkill) => (
-                                                            <div key={subSkill._id} className="bg-bg-primary p-4 rounded-xl border border-border-color/50 relative group hover:border-accent/30 transition-all">
+                                                    {categoryItem.subSkills && categoryItem.subSkills.length > 0 ? categoryItem.subSkills.map((subSkill, subIndex) => (
+                                                            <div 
+                                                                key={subSkill._id} 
+                                                                draggable
+                                                                onDragStart={(e) => handleDragStart(e, subIndex, "subskills", categoryItem._id)}
+                                                                onDragEnter={(e) => handleDragEnter(e, subIndex, "subskills", categoryItem._id)}
+                                                                onDragEnd={handleDragEnd}
+                                                                onDragOver={(e) => e.preventDefault()}
+                                                                className={`bg-bg-primary p-4 rounded-xl border ${draggingIndex === subIndex && draggingSection === "subskills" && draggingCategory === categoryItem._id ? 'border-accent opacity-50' : 'border-border-color/50'} relative group hover:border-accent/30 transition-all cursor-grab active:cursor-grabbing`}
+                                                            >
                                                                 <button 
                                                                     onClick={() => handleDeleteSubSkill(categoryItem._id, subSkill._id)} 
                                                                     className="absolute top-2 right-2 p-1.5 rounded-md bg-red-500/10 text-red-500 opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-500 hover:text-white"

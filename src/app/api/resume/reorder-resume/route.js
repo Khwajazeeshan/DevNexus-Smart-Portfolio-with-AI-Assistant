@@ -5,7 +5,7 @@ import { NextResponse } from "next/server";
 export async function POST(request) {
     try {
         await connectDB();
-        const { type, ids } = await request.json();
+        const { type, ids, categoryId } = await request.json();
 
         if (!type || !ids || !Array.isArray(ids)) {
             return NextResponse.json({ message: "Invalid request data" }, { status: 400 });
@@ -25,6 +25,16 @@ export async function POST(request) {
         } else if (type === "skills") {
             const reordered = ids.map(id => resume.skills.id(id)).filter(Boolean);
             resume.skills = reordered;
+        } else if (type === "subskills") {
+            if (!categoryId) {
+                return NextResponse.json({ message: "Category ID is required for subskills reordering" }, { status: 400 });
+            }
+            const category = resume.skills.id(categoryId);
+            if (!category) {
+                return NextResponse.json({ message: "Category not found" }, { status: 404 });
+            }
+            const reordered = ids.map(id => category.subSkills.id(id)).filter(Boolean);
+            category.subSkills = reordered;
         } else {
             return NextResponse.json({ message: "Invalid type" }, { status: 400 });
         }

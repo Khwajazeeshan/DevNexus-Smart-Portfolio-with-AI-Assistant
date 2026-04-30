@@ -215,7 +215,7 @@ const Resume = forwardRef(({ onComplete }, outerRef) => {
                         <div className="p-4 inline-block bg-gradient-to-br from-bg-card to-bg-primary border border-border-color rounded-full shadow-custom text-accent-2 animate-float">
                             <FaGraduationCap size={24} />
                         </div>
-                        <h2 className="text-4xl md:text-5xl font-heading  text-text-primary tracking-tight">
+                        <h2 className="text-4xl md:text-5xl font-heading font-extrabold  text-text-primary tracking-tight">
                             Education
                         </h2>
                     </div>

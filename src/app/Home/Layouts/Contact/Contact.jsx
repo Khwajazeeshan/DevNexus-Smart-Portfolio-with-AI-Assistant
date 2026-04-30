@@ -26,6 +26,13 @@ const Contact = forwardRef(({ onComplete }, ref) => {
         fetchContact();
     }, []);
 
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            if (onComplete) onComplete();
+        }, 500);
+        return () => clearTimeout(timer);
+    }, [onComplete]);
+
     const address = contact?.address || "Address not provided";
     const mapLink = ensureHttps(contact?.mapLink) || "#";
     const email = contact?.email || "khawajazeeshan225@gmail.com";
@@ -46,7 +53,8 @@ const Contact = forwardRef(({ onComplete }, ref) => {
 
             <div className="mb-6">
                 <div className="animate-fadeInUp relative group">
-                    <div className="absolute -inset-1 bg-gradient-to-r from-accent to-accent-2 rounded-3xl blur opacity-20 group-hover:opacity-40 transition duration-1000 group-hover:duration-200"></div>
+                    <div className="absolute -inset-1 bg-gradient-to-r fromnpm run dev 
+                    -accent to-accent-2 rounded-3xl blur opacity-20 group-hover:opacity-40 transition duration-1000 group-hover:duration-200"></div>
                     <div className="relative flex flex-col md:flex-row items-center justify-between gap-6 sm:gap-8 p-6 sm:p-8 md:p-12 bg-bg-card border border-border-color rounded-[2rem] shadow-sm group-hover:shadow-custom overflow-hidden">
                         <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-accent/5 to-transparent z-0"></div>
                         

@@ -136,7 +136,7 @@ const About = forwardRef(({ onComplete, onReady }, ref) => {
                                             {aboutData.experienceYears || "0"}
                                             <span className="text-accent">+</span>
                                         </div>
-                                        <span className="text-[10px] sm:text-sm md:text-base text-text-secondary uppercase tracking-wider font-medium max-w-[60px] sm:max-w-[80px]">Years of Craft</span>
+                                        <span className="text-[10px] sm:text-sm md:text-base text-text-secondary uppercase tracking-wider font-medium max-w-[60px] sm:max-w-[80px]">Years of Experience</span>
                                     </div>
                                     <div className="w-[1px] h-10 sm:h-12 bg-border-color"></div>
                                     <div className="flex items-center gap-3 sm:gap-4">

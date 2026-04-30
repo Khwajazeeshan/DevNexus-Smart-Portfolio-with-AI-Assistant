@@ -32,7 +32,7 @@ export async function GET() {
             status: 200,
             headers: {
                 "Content-Type": "application/pdf",
-                "Content-Disposition": `attachment; filename="Professional_Resume.pdf"`,
+                "Content-Disposition": `attachment; filename="Resume.pdf"`,
                 "Cache-Control": "no-cache, no-store, must-revalidate",
                 "Content-Length": buffer.length.toString(),
             },

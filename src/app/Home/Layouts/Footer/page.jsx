@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, forwardRef } from "react";
 
 
 const ensureHttps = (url) => {
@@ -7,7 +7,7 @@ const ensureHttps = (url) => {
     return url.startsWith("http://") || url.startsWith("https://") ? url : `https://${url}`;
 };
 
-export default function Footer() {
+const Footer = forwardRef((props, ref) => {
     const [userName, setUserName] = useState("Khawaja Zeeshan");
 
     useEffect(() => {
@@ -27,7 +27,7 @@ export default function Footer() {
         fetchData();
     }, []);
     return (
-        <footer className="relative bg-bg-card border-t border-border-color py-3 px-4 sm:px-6 lg:px-8 mt-3 overflow-hidden">
+        <footer ref={ref} className="relative bg-bg-card border-t border-border-color py-3 px-4 sm:px-6 lg:px-8 mt-3 overflow-hidden">
             {/* Background Orbs */}
             <div className="absolute top-0 left-1/4 w-96 h-96 bg-accent/10 rounded-full blur-[100px] -z-10 mix-blend-multiply dark:mix-blend-screen animate-float"></div>
             <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-accent-2/10 rounded-full blur-[100px] -z-10 mix-blend-multiply dark:mix-blend-screen animate-float" style={{ animationDelay: '2s' }}></div>
@@ -40,6 +40,9 @@ export default function Footer() {
             </div>
         </footer>
     );
-}
+});
+
+Footer.displayName = "Footer";
+export default Footer;
 
 

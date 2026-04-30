@@ -5,6 +5,7 @@ import Resume from "./Layouts/Resume/Resume";
 import Projects from "./Layouts/Project/Project";
 import Contact from "./Layouts/Contact/Contact";
 import Chatbot from "../chatbot/page";
+import Footer from "./Layouts/Footer/page";
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
 export default function Home({ sections, onReady }) {
@@ -29,7 +30,10 @@ export default function Home({ sections, onReady }) {
           <Projects ref={sections.projects} onComplete={() => showNextSection("Contact")} />
         )}
         {visibleSections.includes("Contact") && (
-          <Contact ref={sections.contact} />
+          <Contact ref={sections.contact} onComplete={() => showNextSection("Footer")} />
+        )}
+        {visibleSections.includes("Footer") && (
+          <Footer ref={sections.footer} />
         )}
       </div>
 
